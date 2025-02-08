@@ -1,12 +1,137 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template: 3.7rem 1fr 50px / 250px 1fr;
 }
 
 h1 {
-    display: inline;
-    position: absolute;
-    left: 20px;
-    top: 5px;
+  display: inline;
+  position: absolute;
+  left: 2vw;
+  top: 9px;
+  color: black;
+}
+
+h1 a {
+    visibility: hidden;
+}
+
+h1:hover a {
+    visibility: visible;
+    color: rgb(0, 0, 0);
+}
+
+/* HEADER */
+
+header {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: end;
+  grid-column: 1 / 3;
+  grid-row: 1 / 2;
+  background-color: rgba(250, 243, 147, 0.705);
+
+  /*
+  height: 3.7rem;
+  width: 100vw;
+  */
+}
+
+header span {
+  justify-self: flex-start;
+}
+
+header nav ul {
+  list-style: none;
+}
+
+.menu-icon {
+    padding: 0.7rem;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    font-size: 22px;
+    background-color: #eee;
+    border-right: 1px solid rgb(124, 124, 124);
+    padding: 1.5rem;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar-navegation-menu ul{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.sidebar-navegation-menu ul > * {
+    padding: .5rem 1.5rem;
+    margin-bottom: 7px;
+    cursor: pointer;
+}
+
+.sidebar-navegation-menu ul > *:hover {
+    font-weight: 600;
+}
+
+/* FOOTBAR */
+
+footer {
+    grid-column: 1 / 3;
+    grid-row: 3 / 4;
+}
+
+footer p {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+footer p a {
+    text-decoration: none;
+}
+
+/* Dynamically allocated */
+
+.hidden {
+    visibility: hidden;
+}
+
+.disapear-of-flux-layout {
+    transform: translateX(100vw);
+}
+
+@media (max-width: 700px) {
+    .content {
+        display: grid;
+        grid-template-columns: 1fr 250px;
+    }
+
+    .sidebar {
+        grid-column: 2 / 3;
+        border-left: 1px solid rgb(124, 124, 124);
+        transform: translateX(-100vw);
+    }
 }
