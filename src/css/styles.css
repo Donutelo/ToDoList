@@ -14,14 +14,14 @@ body {
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template: 3.7rem 1fr 50px / 250px 1fr;
+  grid-template: 4.2rem 1fr 50px / 250px 1fr;
 }
 
 h1 {
   display: inline;
   position: absolute;
   left: 2vw;
-  top: 9px;
+  top: 15px;
   color: black;
 }
 
@@ -61,6 +61,7 @@ header nav ul {
 
 .menu-icon {
     padding: 0.7rem;
+    cursor: pointer;
 }
 
 /* SIDEBAR */
@@ -133,5 +134,15 @@ footer p a {
         grid-column: 2 / 3;
         border-left: 1px solid rgb(124, 124, 124);
         transform: translateX(-100vw);
+    }
+
+    .menu-icon {
+        visibility: visible;
+    }
+}
+
+@media (min-width: 701px) {
+    .menu-icon {
+        visibility: hidden;
     }
 }
