@@ -85,7 +85,7 @@ header nav ul {
     align-items: flex-start;
 }
 
-.sidebar-navegation-menu ul > * {
+.sidebar-navegation-menu > ul > * {
     padding: .5rem 1.5rem;
     margin-bottom: 7px;
     cursor: pointer;
@@ -93,6 +93,15 @@ header nav ul {
 
 .sidebar-navegation-menu ul > *:hover {
     font-weight: 600;
+}
+
+.fa-hashtag {
+    background-size: 0.3rem;
+    font-weight: 1;
+}
+
+.project-item {
+    padding: .5rem .8rem;
 }
 
 /* FOOTBAR */
