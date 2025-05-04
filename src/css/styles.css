@@ -56,6 +56,7 @@ h5,
 h6 {
     letter-spacing: 2px;
 }
+
 #root,
 #__next {
     isolation: isolate;
@@ -79,7 +80,7 @@ body {
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template: 4.2rem 1fr 50px / 250px 1fr;
+  grid-template: 4.2rem 1fr 40px / 250px 1fr;
 }
 
 h1 {
@@ -131,8 +132,9 @@ header nav ul {
 /* SIDEBAR */
 
 .sidebar {
+    position: relative;
     grid-column: 1 / 2;
-    grid-row: 2 / 3;
+    grid-row: 2 / 4;
     font-size: 22px;
     background-color: #eee;
     border-right: 1px solid rgb(124, 124, 124);
@@ -168,8 +170,21 @@ header nav ul {
     padding: .1rem .8rem;
 }
 
-/* FOOTBAR */
+.create-todo-icon {
+    position: fixed;
+    bottom: 32px;
+    left: 45px;
+    transform: translateX(-50%);
+    font-size: 48px;
+    color: #ffe96c;
+    background-color: #000000;
+    border-radius: 50px;
+    padding: -1px;
+    cursor: pointer;
+}
 
+/* FOOTBAR */
+/*
 footer {
     grid-column: 1 / 3;
     grid-row: 3 / 4;
@@ -186,10 +201,12 @@ footer p {
 footer p a {
     text-decoration: none;
 }
+*/
 
 /* Dynamically allocated */
 
 .hidden {
+    display: none;
     visibility: hidden;
 }
 

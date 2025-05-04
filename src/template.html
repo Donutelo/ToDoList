@@ -4,9 +4,74 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To do list</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
   </head>
   <body>
+    <!-- Forms to create a new project and/or note and/or todo -->
+    <div class="create-new-window hidden">
+      <form class="create-new">
+        <div class="create-new-header">
+          <p>Let's create a new...</p>
+          <button class="close-button">X</button>
+        </div>
+        <!-- The only thing that that will change through 'tabs' is the content -->
+        <div class="create-new-content">
+          <div class="todo-content">
+            <div class="todo-content-title">
+              <label for="todo-title">Title: </label>
+              <input
+                id="todo-title"
+                type="text"
+                name="todo-title"
+                required=""
+              />
+            </div>
+            <div class="todo-content-description">
+              <label for="todo-description">Description: </label>
+              <input
+                id="todo-description"
+                type="text"
+                name="todo-description"
+              />
+            </div>
+            <div class="todo-content-date">
+              <label for="todo-due-date">Due date: </label>
+              <input
+                type="date"
+                id="todo-due-date"
+                name="todo-due-date"
+                required=""
+              />
+            </div>
+            <div class="todo-content-priority">
+              <button class="todo-low-priority-button">Low</button>
+              <button class="todo-medium-priority-button">Medium</button>
+              <button class="todo-high-priority-button">High</button>
+            </div>
+          </div>
+          <div class="project-content">
+            <label for="project-title">Title: </label>
+            <input
+              id="project-title"
+              type="text"
+              name="todo-title"
+              required=""
+            />
+          </div>
+        </div>
+        <div class="create-new-sidebar">
+          <ul class="create-new-options">
+            <li class="todo-section">To-Do</li>
+            <li class="project-section">Project</li>
+            <li class="note-section">Note</li>
+          </ul>
+        </div>
+      </form>
+    </div>
+
     <div class="content">
       <!-- HEADER -->
       <header>
@@ -25,19 +90,24 @@
             <li class="all-tasks">All</li>
             <li class="today-tasks">Today</li>
             <li class="week-tasks">Week</li>
-            <li class="notes">Notes</li>
             <li class="projects">Projects</li>
             <ul class="project-list">
-                <li class="project-item"><i class="fa-solid fa-hashtag"></i>test project</li>
+              <li class="project-item">
+                <i class="fa-solid fa-hashtag"></i>test project
+              </li>
             </ul>
           </ul>
         </nav>
+        <!-- ícone de adicoinar -->
+        <i class="fas fa-plus-circle create-todo-icon"></i>
       </div>
 
       <!-- FOOTER -->
+      <!--
       <footer>
         <p>Copyright © 2024 Donutelo <a href="https://github.com/Donutelo">Github</a></p>
       </footer>
+      -->
     </div>
   </body>
 </html>
