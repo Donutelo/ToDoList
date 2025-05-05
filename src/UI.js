@@ -1,12 +1,17 @@
 import iconImage from "./images/iconImage";
 
+/* With DOMStuff I mean showing and disappearing things */
 export const DOMStuff = (() => {
+  function showModal(id="create-new-window", modalClass="todo-content"){
+    const modalBackground = document.getElementById(id);
 
-  function createTodo(name, date, description, priority, project, checked=false) {
+    if (modalBackground.classList.contains("hidden")){
+      modalBackground.classList.remove("hidden");
+      modalBackground.style.display = "flex";
+    }
 
+    const modal = modalBackground.querySelector(modalClass);
   }
-
-  
 
   /*
   const taskBox = document.createElement("div");

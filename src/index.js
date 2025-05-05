@@ -1,5 +1,7 @@
 import { format, parseISO } from 'date-fns';
 
-import "./css/styles.css"
+import "./css/styles.css";
 
-console.log("Hello, console")
+document.addEventListener("DOMContentLoaded", function() {
+    
+})
