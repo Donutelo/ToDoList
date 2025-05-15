@@ -1,4 +1,4 @@
-import iconImage from "./images/iconImage";
+/* import iconImage from "./images/iconImage"; */
 
 /* With DOMStuff I mean showing and disappearing things */
 export const DOMStuff = (() => {
@@ -76,28 +76,48 @@ export const DOMStuff = (() => {
           </div>`;
 
   /* In progress */
-  const projectContent = ``;
+  const projectContent = `<div class="project-content">
+            <label for="project-title">Title: </label>
+            <input
+              id="project-title"
+              type="text"
+              name="todo-title"
+              required=""
+            />
+          </div>`;
 
-  function showModal(id="create-new-window", modalClass="todo-content"){
+  let modalContent;
+
+  function showModal({
+    id = "create-new-window",
+    modalClass = "todo-content",
+  } = {}) {
     const modalBackground = document.getElementById(id);
 
     /* First of all, make the overview appear */
     removeHidden(modalBackground);
     modalBackground.style.display = "flex";
 
-    if (modalClass === "todo-content"){
-      const modalContent = todoContent;
+    if (modalClass === "todo-content") {
+      modalContent = todoContent;
+    } else if (modalClass === "project-content") {
+      modalContent = projectContent;
     }
-    else if (modalClass === "project-content"){
-      const modalContent = projectContent;
-    }
-  
-    const modal = modalBackground.querySelector('create-new-content');
+
+    const modal = modalBackground.querySelector(".create-new-content");
     modal.innerHTML = modalContent;
   }
 
-  function removeHidden(obj){
-    if (obj.classList.contains("hidden")){ obj.classList.remove("hidden") }
+  function removeHidden(obj) {
+    if (obj.classList.contains("hidden")) {
+      obj.classList.remove("hidden");
+    }
+  }
+
+  function addHidden(obj) {
+    if(!obj.classList.contains("hidden")) {
+      obj.classList.add("hidden");
+    }
   }
 
   /*
@@ -119,4 +139,5 @@ export const DOMStuff = (() => {
   project.classList.add("project-item");
   */
 
+  return { showModal, addHidden };
 })();
