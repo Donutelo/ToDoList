@@ -84,6 +84,13 @@ export const DOMStuff = (() => {
               name="todo-title"
               required=""
             />
+            <button
+                class="todo-content-submit"
+                type="submit"
+                value="add project"
+              >
+                ...project
+              </button>
           </div>`;
 
   let modalContent;
@@ -109,12 +116,16 @@ export const DOMStuff = (() => {
   }
 
   function removeHidden(obj) {
+    if (obj === null) { return; }
+
     if (obj.classList.contains("hidden")) {
       obj.classList.remove("hidden");
     }
   }
 
   function addHidden(obj) {
+    if (obj === null) { return; }
+
     if(!obj.classList.contains("hidden")) {
       obj.classList.add("hidden");
     }
@@ -139,5 +150,5 @@ export const DOMStuff = (() => {
   project.classList.add("project-item");
   */
 
-  return { showModal, addHidden };
+  return { showModal, addHidden, removeHidden };
 })();
