@@ -1,5 +1,7 @@
 /* import iconImage from "./images/iconImage"; */
 
+import { dataStuff } from "./data";
+
 /* With DOMStuff I mean showing and disappearing things */
 export const DOMStuff = (() => {
   const todoContent = `<div class="todo-content">
@@ -93,6 +95,8 @@ export const DOMStuff = (() => {
               </button>
           </div>`;
 
+  const modal = modalBackground.querySelector(".create-new-content");
+
   let modalContent;
 
   function showModal({
@@ -111,7 +115,6 @@ export const DOMStuff = (() => {
       modalContent = projectContent;
     }
 
-    const modal = modalBackground.querySelector(".create-new-content");
     modal.innerHTML = modalContent;
   }
 
@@ -129,6 +132,9 @@ export const DOMStuff = (() => {
     if(!obj.classList.contains("hidden")) {
       obj.classList.add("hidden");
     }
+  }
+
+  function addToDo(obj) {
   }
 
   /*

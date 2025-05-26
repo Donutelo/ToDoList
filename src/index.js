@@ -1,10 +1,13 @@
+import "./css/styles.css";
+
 import { format, parseISO } from "date-fns";
 
 import { DOMStuff } from "./UI";
 
-import "./css/styles.css";
+import { dataStuff } from "./data";
 
 document.addEventListener("DOMContentLoaded", function () {
+  /* Modal overview stuff */
   const modalOverviewButton = document.querySelector("#modal-overview-button");
 
   const allModalSidebarOptions = document.querySelectorAll(
@@ -14,6 +17,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const modalCloseButton = document.querySelector(".close-button");
 
   const modalOverview = document.querySelector("#create-new-window");
+
+  // The forms
+  const modalForms = document.querySelector(".create-new");
 
   /* Event listener in the modal overview button */
   modalOverviewButton.addEventListener("click", () => {
@@ -33,8 +39,22 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Disapper with the formulary when closed
-  modalCloseButton.addEventListener("click", () => {
+   // Disapper with the form when closed
+  modalCloseButton.addEventListener("click", function(e) {
+    e.preventDefault();
     DOMStuff.addHidden(modalOverview);
   });
+
+  let formsData;
+  /* Getting the form's data when submitted */
+  modalForms.addEventListener("submit", function(e) {
+    e.preventDefault();
+    dataStuff.getFormsData(this);
+    // And object with all the forms data
+    formsData = dataStuff.setFormsData();
+  });
+
+  /* Creating the ToDo by the UI */
+
+
 });

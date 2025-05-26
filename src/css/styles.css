@@ -270,6 +270,10 @@ footer p a {
     margin-left: 20%;
 }
 
+.create-new-options li {
+    cursor: pointer;
+}
+
 .create-new-sidebar ul {
     list-style: none;
 }
