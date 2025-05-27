@@ -2,6 +2,8 @@
 
 import { dataStuff } from "./data";
 
+let todoIndex = 1;
+
 /* With DOMStuff I mean showing and disappearing things */
 export const DOMStuff = (() => {
   const todoContent = `<div class="todo-content">
@@ -95,7 +97,7 @@ export const DOMStuff = (() => {
               </button>
           </div>`;
 
-  const modal = modalBackground.querySelector(".create-new-content");
+  const modal = document.querySelector(".create-new-content");
 
   let modalContent;
 
@@ -134,7 +136,13 @@ export const DOMStuff = (() => {
     }
   }
 
+  let todoTitle;
+  let todoDueDate;
+  let todoPriority;
+  let todoDescription;
+
   function addToDo(obj) {
+    
   }
 
   /*

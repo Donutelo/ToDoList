@@ -55,6 +55,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   /* Creating the ToDo by the UI */
-
+  
 
 });

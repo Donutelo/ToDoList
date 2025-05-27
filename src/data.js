@@ -6,9 +6,7 @@ export const dataStuff = (() => {
     allFormsData = new FormData(forms);
     formsData = {};
 
-    allFormsData.forEach((value, key) => {
-      formsData[key] = value;
-    });
+    formsData = Object.fromEntries(allFormsData.entries());
   }
 
   function setFormsData() {

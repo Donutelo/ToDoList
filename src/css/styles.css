@@ -3,19 +3,26 @@
   https://www.joshwcomeau.com/css/custom-css-reset/
 */
 
+:root {
+  --little-round-border: 5px;
+  --light-green: rgba(78, 255, 55, 0.3);
+  --light-yellow: rgb(255, 252, 89, 0.3);
+  --light-red: rgba(255, 89, 89, 0.582);
+}
+
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 * {
-    margin: 0;
+  margin: 0;
 }
 
 body {
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
 img,
@@ -23,15 +30,15 @@ picture,
 video,
 canvas,
 svg {
-    display: block;
-    max-width: 100%;
+  display: block;
+  max-width: 100%;
 }
 
 input,
 button,
 textarea,
 select {
-    font: inherit;
+  font: inherit;
 }
 
 p,
@@ -41,11 +48,11 @@ h3,
 h4,
 h5,
 h6 {
-    overflow-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 p {
-    text-wrap: pretty;
+  text-wrap: pretty;
 }
 
 h1,
@@ -54,12 +61,12 @@ h3,
 h4,
 h5,
 h6 {
-    letter-spacing: 2px;
+  letter-spacing: 2px;
 }
 
 #root,
 #__next {
-    isolation: isolate;
+  isolation: isolate;
 }
 
 /* MY STUFF BELOW */
@@ -91,12 +98,12 @@ h1 {
 }
 
 h1 a {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 h1:hover a {
-    visibility: visible;
-    color: rgb(0, 0, 0);
+  visibility: visible;
+  color: rgb(0, 0, 0);
 }
 
 /* HEADER */
@@ -125,62 +132,137 @@ header nav ul {
 }
 
 .menu-icon {
-    padding: 0.7rem;
-    cursor: pointer;
+  padding: 0.7rem;
+  cursor: pointer;
+}
+
+/* MAIN CONTENT */
+
+.main-content {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+}
+
+.main-content > :first-child {
+  margin-top: 2rem;
+}
+
+.todo-item {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 5px;
+  height: 2.3rem;
+}
+
+.todo-item:hover {
+  background-color:rgb(233, 233, 233);
+}
+
+.todo-priority-low {
+  margin-right: 5px;
+  width: 3px;
+  height: 100%;
+  background-color: var(--light-green);
+}
+
+.todo-priority-medium {
+  margin-right: 5px;
+  width: 3px;
+  height: 100%;
+  background-color: var(--light-yellow);
+}
+
+.todo-priority-high {
+  margin-right: 5px;
+  width: 3px;
+  height: 100%;
+  background-color: var(--light-red);
+}
+
+.todo-checkbox {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+}
+
+.todo-checkbox input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  border: 1px solid black;
+  border-radius: 10px;
+  transition: box-shadow .3s;
+  background: white;
+}
+
+.todo-description-button {
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+.todo-title {
+  margin-right: 5px;
+}
+
+.todo-date {
+  margin-right: 20px;
 }
 
 /* SIDEBAR */
 
 .sidebar {
-    position: relative;
-    grid-column: 1 / 2;
-    grid-row: 2 / 4;
-    font-size: 22px;
-    background-color: #eee;
-    border-right: 1px solid rgb(124, 124, 124);
-    padding: 1.5rem;
+  position: relative;
+  grid-column: 1 / 2;
+  grid-row: 2 / 4;
+  font-size: 22px;
+  background-color: #eee;
+  border-right: 1px solid rgb(124, 124, 124);
+  padding: 1.5rem;
 }
 
 .sidebar ul {
-    list-style: none;
+  list-style: none;
 }
 
-.sidebar-navegation-menu ul{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+.sidebar-navegation-menu ul {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .sidebar-navegation-menu > ul > * {
-    padding: .5rem 1.5rem;
-    margin-bottom: 7px;
-    cursor: pointer;
+  padding: 0.5rem 1.5rem;
+  margin-bottom: 7px;
+  cursor: pointer;
 }
 
 .sidebar-navegation-menu ul > *:hover {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 .fa-hashtag {
-    background-size: 0.3rem;
-    font-weight: 1;
+  background-size: 0.3rem;
+  font-weight: 1;
 }
 
 .project-item {
-    padding: .1rem .8rem;
+  padding: 0.1rem 0.8rem;
 }
 
 .create-todo-icon {
-    position: fixed;
-    bottom: 32px;
-    left: 45px;
-    transform: translateX(-50%);
-    font-size: 48px;
-    color: #ffe96c;
-    background-color: #000000;
-    border-radius: 50px;
-    padding: -1px;
-    cursor: pointer;
+  position: fixed;
+  bottom: 32px;
+  left: 45px;
+  transform: translateX(-50%);
+  font-size: 48px;
+  color: #ffe96c;
+  background-color: #000000;
+  border-radius: 50px;
+  padding: -1px;
+  cursor: pointer;
 }
 
 /* FOOTBAR */
@@ -206,80 +288,80 @@ footer p a {
 /* Forms for new todos and projects */
 
 #create-new-window {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 9998;
-    background-color: rgba(0, 0, 0, 0.3);
-    display: flex; /* Don't forgot to take away */
-    align-items: center;
-    justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9998;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex; /* Don't forgot to take away */
+  align-items: center;
+  justify-content: center;
 }
 
 .create-new {
-    display: grid;
-    grid-template: 3rem 1fr / clamp(0px, 20%, 150px) auto;
-    background: white;
-    padding: 0;
-    /* I wanted to limit the width growth, but naahh, too much work */
-    min-width: 70vw;
-    max-width: 800px;
-    width: auto;
-    min-height: 40vh;
-    border-radius: 5px;
+  display: grid;
+  grid-template: 3rem 1fr / clamp(0px, 20%, 150px) auto;
+  background: white;
+  padding: 0;
+  /* I wanted to limit the width growth, but naahh, too much work */
+  min-width: 70vw;
+  max-width: 800px;
+  width: auto;
+  min-height: 40vh;
+  border-radius: 5px;
 }
 
 .create-new-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px;
-    grid-row: 1 / 2;
-    grid-column: 1 / 3;
-    background-color: rgba(250, 243, 147, 0.705);
-    font-size: 1.5rem;
-    font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  grid-row: 1 / 2;
+  grid-column: 1 / 3;
+  background-color: rgba(250, 243, 147, 0.705);
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
 .create-new-header button {
-    background: none;
-    border: none;
-    padding: 0;
-    margin: 0;
-    font: inherit;
-    color: inherit;
-    cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
 }
 
 .create-new-sidebar {
-    grid-row: 2 / 3;
-    grid-column: 1 / 2;
-    padding: 1.3rem;
-    font-size: 1.2rem;
-    background-color: #eee;
+  grid-row: 2 / 3;
+  grid-column: 1 / 2;
+  padding: 1.3rem;
+  font-size: 1.2rem;
+  background-color: #eee;
 }
 
 .create-new-options {
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: start;
-    align-items: start;
-    gap: 10px;
-    margin-left: 20%;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: start;
+  align-items: start;
+  gap: 10px;
+  margin-left: 20%;
 }
 
 .create-new-options li {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .create-new-sidebar ul {
-    list-style: none;
+  list-style: none;
 }
 
 .create-new-sidebar > ul > *:hover {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 /* I would, theoretically, start the todo-content part, but all this design are annoying the shit out of me, so I will jump for some JavaScript now */
@@ -287,37 +369,37 @@ footer p a {
 /* Dynamically allocated */
 
 .hidden {
-    display: none;
-    visibility: hidden;
+  display: none;
+  visibility: hidden;
 }
 
 .disapear-of-flux-layout {
-    transform: translateX(100vw);
+  transform: translateX(100vw);
 }
 
 @media (max-width: 700px) {
-    .content {
-        display: grid;
-        grid-template-columns: 1fr 250px;
-    }
+  .content {
+    display: grid;
+    grid-template-columns: 1fr 250px;
+  }
 
-    .sidebar {
-        grid-column: 2 / 3;
-        border-left: 1px solid rgb(124, 124, 124);
-        transform: translateX(-100vw);
-    }
+  .sidebar {
+    grid-column: 2 / 3;
+    border-left: 1px solid rgb(124, 124, 124);
+    transform: translateX(-100vw);
+  }
 
-    .menu-icon {
-        visibility: visible;
-    }
+  .menu-icon {
+    visibility: visible;
+  }
 
-    h1 {
-        left: 2.5vw;
-    }
+  h1 {
+    left: 2.5vw;
+  }
 }
 
 @media (min-width: 701px) {
-    .menu-icon {
-        visibility: hidden;
-    }
+  .menu-icon {
+    visibility: hidden;
+  }
 }
