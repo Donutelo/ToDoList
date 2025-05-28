@@ -18,6 +18,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const modalOverview = document.querySelector("#create-new-window");
 
+  const mainContent = document.querySelector(".main-content");
+
   // The forms
   const modalForms = document.querySelector(".create-new");
 
@@ -39,22 +41,23 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-   // Disapper with the form when closed
-  modalCloseButton.addEventListener("click", function(e) {
+  // Disapper with the form when closed
+  modalCloseButton.addEventListener("click", function (e) {
     e.preventDefault();
     DOMStuff.addHidden(modalOverview);
   });
 
   let formsData;
   /* Getting the form's data when submitted */
-  modalForms.addEventListener("submit", function(e) {
+  modalForms.addEventListener("submit", function (e) {
     e.preventDefault();
     dataStuff.getFormsData(this);
+
     // And object with all the forms data
     formsData = dataStuff.setFormsData();
+
+    // Creating the ToDo by the UI
+    const todoDOM = DOMStuff.addToDo(formsData);
+    mainContent.appendChild(todoDOM);
   });
-
-  /* Creating the ToDo by the UI */
-  
-
 });

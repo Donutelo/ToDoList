@@ -159,7 +159,7 @@ header nav ul {
 }
 
 .todo-item:hover {
-  background-color:rgb(233, 233, 233);
+  background-color: rgb(233, 233, 233);
 }
 
 .todo-priority-low {
@@ -194,7 +194,7 @@ header nav ul {
   height: 15px;
   border: 1px solid black;
   border-radius: 10px;
-  transition: box-shadow .3s;
+  transition: box-shadow 0.3s;
   background: white;
 }
 
@@ -266,24 +266,23 @@ header nav ul {
 }
 
 /* FOOTBAR */
-/*
+
 footer {
-    grid-column: 1 / 3;
-    grid-row: 3 / 4;
+  grid-column: 1 / 3;
+  grid-row: 3 / 4;
 }
 
 footer p {
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
 }
 
 footer p a {
-    text-decoration: none;
+  text-decoration: none;
 }
-*/
 
 /* Forms for new todos and projects */
 
@@ -380,11 +379,16 @@ footer p a {
 @media (max-width: 700px) {
   .content {
     display: grid;
-    grid-template-columns: 1fr 250px;
+    grid-template: 4.2rem 1fr 40px / 1fr;
+  }
+
+  .main-content {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
   }
 
   .sidebar {
-    grid-column: 2 / 3;
+    grid-column: 1 / 2;
     border-left: 1px solid rgb(124, 124, 124);
     transform: translateX(-100vw);
   }

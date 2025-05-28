@@ -1,5 +1,7 @@
 /* import iconImage from "./images/iconImage"; */
 
+import { format } from "date-fns";
+
 import { dataStuff } from "./data";
 
 let todoIndex = 1;
@@ -141,8 +143,11 @@ export const DOMStuff = (() => {
   }
 
   function addToDo(obj) {
-    const todoItem = document.createElement("div");
+    if (obj === null) {
+      return;
+    }
 
+    const todoItem = document.createElement("div");
     todoItem.classList.add("todo-item");
     todoItem.dataset.index = todoIndex;
     todoIndex = todoIndex + 1;
@@ -175,8 +180,15 @@ export const DOMStuff = (() => {
 
     const todoDueDate = document.createElement("div");
     todoDueDate.classList.add("todo-date");
-    
+    todoDueDate.textContent = format(obj["todo-due-date"], "dd/MM");
 
+    todoItem.appendChild(todoPriority);
+    todoItem.appendChild(todoCheckbox);
+    todoItem.appendChild(todoDescriptionButton);
+    todoItem.appendChild(todoTitle);
+    todoItem.appendChild(todoDueDate);
+
+    return todoItem;
   }
 
   /*
@@ -198,5 +210,5 @@ export const DOMStuff = (() => {
   project.classList.add("project-item");
   */
 
-  return { showModal, addHidden, removeHidden };
+  return { showModal, addHidden, removeHidden, addToDo };
 })();
