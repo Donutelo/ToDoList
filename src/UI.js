@@ -121,7 +121,9 @@ export const DOMStuff = (() => {
   }
 
   function removeHidden(obj) {
-    if (obj === null) { return; }
+    if (obj === null) {
+      return;
+    }
 
     if (obj.classList.contains("hidden")) {
       obj.classList.remove("hidden");
@@ -129,20 +131,52 @@ export const DOMStuff = (() => {
   }
 
   function addHidden(obj) {
-    if (obj === null) { return; }
+    if (obj === null) {
+      return;
+    }
 
-    if(!obj.classList.contains("hidden")) {
+    if (!obj.classList.contains("hidden")) {
       obj.classList.add("hidden");
     }
   }
 
-  let todoTitle;
-  let todoDueDate;
-  let todoPriority;
-  let todoDescription;
-
   function addToDo(obj) {
+    const todoItem = document.createElement("div");
+
+    todoItem.classList.add("todo-item");
+    todoItem.dataset.index = todoIndex;
+    todoIndex = todoIndex + 1;
+
+    const todoPriority = document.createElement("div");
+
+    if (obj["todo-priority"] === "low") {
+      todoPriority.classList.add("todo-priority-low");
+    } else if (obj["todo-priority"] === "medium") {
+      todoPriority.classList.add("todo-priority-medium");
+    } else if (obj["todo-priority"] === "high") {
+      todoPriority.classList.add("todo-priority-high");
+    }
+
+    const todoCheckbox = document.createElement("label");
+    todoCheckbox.classList.add("todo-checkbox");
+
+    const todoInputCheckbox = document.createElement("input");
+    todoInputCheckbox.setAttribute("type", "checkbox");
+
+    todoCheckbox.appendChild(todoInputCheckbox);
+
+    const todoDescriptionButton = document.createElement("button");
+    todoDescriptionButton.classList.add("todo-description-button");
+    todoDescriptionButton.textContent = "Description";
+
+    const todoTitle = document.createElement("div");
+    todoTitle.classList.add("todo-title");
+    todoTitle.textContent = obj["todo-title"];
+
+    const todoDueDate = document.createElement("div");
+    todoDueDate.classList.add("todo-date");
     
+
   }
 
   /*
