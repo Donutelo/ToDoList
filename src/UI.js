@@ -1,4 +1,4 @@
-/* import iconImage from "./images/iconImage"; */
+ /* import iconImage from "./images/iconImage"; */
 
 import { format } from "date-fns";
 
@@ -87,11 +87,11 @@ export const DOMStuff = (() => {
             <input
               id="project-title"
               type="text"
-              name="todo-title"
+              name="project-title"
               required=""
             />
             <button
-                class="todo-content-submit"
+                class="project-content-submit"
                 type="submit"
                 value="add project"
               >
@@ -188,6 +188,8 @@ export const DOMStuff = (() => {
     todoItem.appendChild(todoTitle);
     todoItem.appendChild(todoDueDate);
 
+    // Colocando no storage
+    dataStuff.populateSection(todoItem);
     return todoItem;
   }
 
