@@ -1,4 +1,4 @@
- /* import iconImage from "./images/iconImage"; */
+/* import iconImage from "./images/iconImage"; */
 
 import { format } from "date-fns";
 
@@ -188,8 +188,8 @@ export const DOMStuff = (() => {
     todoItem.appendChild(todoTitle);
     todoItem.appendChild(todoDueDate);
 
-    // Colocando no storage
-    dataStuff.populateSection(todoItem);
+    // Putting in the storage
+    dataStuff.storeInfo(todoItem);
     return todoItem;
   }
 

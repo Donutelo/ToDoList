@@ -23,6 +23,9 @@ document.addEventListener("DOMContentLoaded", function () {
   // The forms
   const modalForms = document.querySelector(".create-new");
 
+  // The edit forms
+  const modalFormsEdit = document.querySelector(".edit-forms");
+
   /* Event listener in the modal overview button */
   modalOverviewButton.addEventListener("click", () => {
     DOMStuff.removeHidden(modalOverview);
