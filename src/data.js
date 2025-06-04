@@ -1,7 +1,7 @@
 export const dataStuff = (() => {
   let allFormsData, formsData;
 
-  let todoIndex = 1;
+  let projectIndex = 1;
 
   function getFormsData(forms) {
     // Kinda of a bad name, but I don't have any other ideias at the moment
@@ -15,13 +15,17 @@ export const dataStuff = (() => {
     return formsData;
   }
 
-  function storeInfo(obj) {
+  function storeInfo({
+    obj = {},
+    todoIndex = undefined,
+    projectIndex = undefined,
+  } = {}) {
     if (obj === null) {
       return;
     }
 
     // If it's a todo
-    if (obj["todo-title"]) {
+    if (obj.classList.contains("todo-item")){
       localStorage.setItem(
         `todo-priority-${todoIndex.toString()}`,
         obj.querySelector(".todo-priority")
@@ -45,20 +49,15 @@ export const dataStuff = (() => {
     }
 
     // if it's a project
-    else if (obj["project-title"]) {
-      // This will have to change, otherwise only one project will ever be in the storage
-      // localStorage.setItem(
-      //   "project-title",
-      //   obj.querySelector("#project-title")
-      // );
+    else if (obj.classList.contains("project-item")) {
+      localStorage.setItem(
+        `project-title${projectIndex.toString()}`,
+        obj.querySelector("#project-title")
+      );
     }
-
-    todoIndex += 1;
   }
 
-  function setInfo() {
-    const obj = {};
-
+  function setInfo(index) {
     obj["todoTitle"] = localStorage.getItem("");
   }
 

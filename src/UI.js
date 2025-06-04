@@ -150,7 +150,6 @@ export const DOMStuff = (() => {
     const todoItem = document.createElement("div");
     todoItem.classList.add("todo-item");
     todoItem.dataset.index = todoIndex;
-    todoIndex = todoIndex + 1;
 
     const todoPriority = document.createElement("div");
 
@@ -172,7 +171,9 @@ export const DOMStuff = (() => {
 
     const todoDescriptionButton = document.createElement("button");
     todoDescriptionButton.classList.add("todo-description-button");
-    todoDescriptionButton.textContent = "Description";
+    const todoImageEdit = document.createElement("img");
+    todoImageEdit.src = "images/editImage.png";
+    todoDescriptionButton.appendChild(todoImageEdit);
 
     const todoTitle = document.createElement("div");
     todoTitle.classList.add("todo-title");
@@ -189,7 +190,8 @@ export const DOMStuff = (() => {
     todoItem.appendChild(todoDueDate);
 
     // Putting in the storage
-    dataStuff.storeInfo(todoItem);
+    dataStuff.storeInfo({ obj: todoItem, todoIndex: todoIndex });
+    todoIndex = todoIndex + 1;
     return todoItem;
   }
 

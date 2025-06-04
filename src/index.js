@@ -63,4 +63,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const todoDOM = DOMStuff.addToDo(formsData);
     mainContent.appendChild(todoDOM);
   });
+
+  // Do later.
+  // let formsEditData;
+  // // Getting the form's edit data when submitted
+  // modalFormsEdit.addEventListener("submit", function (e) {
+  //   e.preventDefault();
+  //   dataStuff.getFormsDate(this);
+
+  //   formsData = data
+  // });
 });
