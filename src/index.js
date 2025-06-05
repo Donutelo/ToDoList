@@ -10,6 +10,8 @@ document.addEventListener("DOMContentLoaded", function () {
   /* Modal overview stuff */
   const modalOverviewButton = document.querySelector("#modal-overview-button");
 
+  const modalEditOverviewButton = document.querySelector("#edit-forms-description-button");
+
   const allModalSidebarOptions = document.querySelectorAll(
     ".create-new-options > *"
   );
@@ -17,6 +19,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const modalCloseButton = document.querySelector(".close-button");
 
   const modalOverview = document.querySelector("#create-new-window");
+
+  const modalEditOverview = document.querySelector("#edit-forms-window");
 
   const mainContent = document.querySelector(".main-content");
 
@@ -29,6 +33,11 @@ document.addEventListener("DOMContentLoaded", function () {
   /* Event listener in the modal overview button */
   modalOverviewButton.addEventListener("click", () => {
     DOMStuff.removeHidden(modalOverview);
+  });
+
+  /* Event listener in the modal-edit overview button */
+  modalEditOverviewButton.addEventListener("click", () => {
+    DOMStuff.removeHidden(modalEditOverview);
   });
 
   /* Putting the event listener in the modal side items */

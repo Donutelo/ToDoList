@@ -1,4 +1,4 @@
-/* import iconImage from "./images/iconImage"; */
+import iconImage from "/workspaces/ToDoList/src/images/editImage.png";
 
 import { format } from "date-fns";
 
@@ -172,7 +172,7 @@ export const DOMStuff = (() => {
     const todoDescriptionButton = document.createElement("button");
     todoDescriptionButton.classList.add("todo-description-button");
     const todoImageEdit = document.createElement("img");
-    todoImageEdit.src = "images/editImage.png";
+    todoImageEdit.src = iconImage;
     todoDescriptionButton.appendChild(todoImageEdit);
 
     const todoTitle = document.createElement("div");
