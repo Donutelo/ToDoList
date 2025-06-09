@@ -10,8 +10,6 @@ document.addEventListener("DOMContentLoaded", function () {
   /* Modal overview stuff */
   const modalOverviewButton = document.querySelector("#modal-overview-button");
 
-  const modalEditOverviewButton = document.querySelector("#edit-forms-description-button");
-
   const allModalSidebarOptions = document.querySelectorAll(
     ".create-new-options > *"
   );
@@ -33,11 +31,6 @@ document.addEventListener("DOMContentLoaded", function () {
   /* Event listener in the modal overview button */
   modalOverviewButton.addEventListener("click", () => {
     DOMStuff.removeHidden(modalOverview);
-  });
-
-  /* Event listener in the modal-edit overview button */
-  modalEditOverviewButton.addEventListener("click", () => {
-    DOMStuff.removeHidden(modalEditOverview);
   });
 
   /* Putting the event listener in the modal side items */
@@ -71,6 +64,14 @@ document.addEventListener("DOMContentLoaded", function () {
     // Creating the ToDo by the UI
     const todoDOM = DOMStuff.addToDo(formsData);
     mainContent.appendChild(todoDOM);
+
+    const modalEditOverviewButton = document.querySelector(
+      ".todo-content-description"
+    );
+
+    modalEditOverviewButton.addEventListener("click", () => {
+      DOMStuff.removeHidden(modalEditOverview);
+    });
   });
 
   // Do later.
