@@ -103,6 +103,8 @@ export const DOMStuff = (() => {
 
   let modalContent;
 
+  const modalEditOverview = document.querySelector("#edit-forms-window");
+
   function showModal({
     id = "create-new-window",
     modalClass = "todo-content",
@@ -130,6 +132,8 @@ export const DOMStuff = (() => {
     if (obj.classList.contains("hidden")) {
       obj.classList.remove("hidden");
     }
+
+    console.log("teste");
   }
 
   function addHidden(obj) {
@@ -182,6 +186,10 @@ export const DOMStuff = (() => {
     const todoDueDate = document.createElement("div");
     todoDueDate.classList.add("todo-date");
     todoDueDate.textContent = format(obj["todo-due-date"], "dd/MM");
+
+    todoDescriptionButton.addEventListener("click", () => {
+      removeHidden(modalEditOverview);
+    });
 
     todoItem.appendChild(todoPriority);
     todoItem.appendChild(todoCheckbox);

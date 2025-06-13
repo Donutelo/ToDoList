@@ -14,11 +14,9 @@ document.addEventListener("DOMContentLoaded", function () {
     ".create-new-options > *"
   );
 
-  const modalCloseButton = document.querySelector(".close-button");
+  const closeButtons = document.querySelectorAll(".close-button");
 
   const modalOverview = document.querySelector("#create-new-window");
-
-  const modalEditOverview = document.querySelector("#edit-forms-window");
 
   const mainContent = document.querySelector(".main-content");
 
@@ -47,9 +45,11 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Disapper with the form when closed
-  modalCloseButton.addEventListener("click", function (e) {
-    e.preventDefault();
-    DOMStuff.addHidden(modalOverview);
+  closeButtons.forEach((button) => {
+    button.addEventListener("click", function (e) {
+      e.preventDefault();
+      DOMStuff.addHidden(button.parentElement.parentElement.parentElement);
+    });
   });
 
   let formsData;
@@ -64,14 +64,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Creating the ToDo by the UI
     const todoDOM = DOMStuff.addToDo(formsData);
     mainContent.appendChild(todoDOM);
-
-    const modalEditOverviewButton = document.querySelector(
-      ".todo-content-description"
-    );
-
-    modalEditOverviewButton.addEventListener("click", () => {
-      DOMStuff.removeHidden(modalEditOverview);
-    });
   });
 
   // Do later.
