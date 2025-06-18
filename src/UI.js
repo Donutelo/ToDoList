@@ -100,10 +100,8 @@ export const DOMStuff = (() => {
           </div>`;
 
   const modal = document.querySelector(".create-new-content");
-
-  let modalContent;
-
   const modalEditOverview = document.querySelector("#edit-forms-window");
+  let modalContent;
 
   function showModal({
     id = "create-new-window",
@@ -187,6 +185,7 @@ export const DOMStuff = (() => {
     todoDueDate.classList.add("todo-date");
     todoDueDate.textContent = format(obj["todo-due-date"], "dd/MM");
 
+    // I should just add call an 'loadEditContent' here
     todoDescriptionButton.addEventListener("click", () => {
       removeHidden(modalEditOverview);
     });
@@ -201,6 +200,10 @@ export const DOMStuff = (() => {
     dataStuff.storeInfo({ obj: todoItem, todoIndex: todoIndex });
     todoIndex = todoIndex + 1;
     return todoItem;
+  }
+
+  function loadEditContent(obj) {
+
   }
 
   /*

@@ -28,23 +28,23 @@ export const dataStuff = (() => {
     if (obj.classList.contains("todo-item")){
       localStorage.setItem(
         `todo-priority-${todoIndex.toString()}`,
-        obj.querySelector(".todo-priority")
+        JSON.stringify(obj.querySelector(".todo-priority"))
       );
       localStorage.setItem(
         `todo-checkbox-${todoIndex.toString()}`,
-        obj.querySelector(".todo-checkbox")
+        JSON.stringify(obj.querySelector(".todo-checkbox"))
       );
       localStorage.setItem(
         `todo-description-button-${todoIndex.toString()}`,
-        obj.querySelector(".todo-description-button")
+        JSON.stringify(obj.querySelector(".todo-description-button"))
       );
       localStorage.setItem(
         `todo-title-${todoIndex.toString()}`,
-        obj.querySelector(".todo-title")
+        JSON.stringify(obj.querySelector(".todo-title"))
       );
       localStorage.setItem(
         `todo-date-${todoIndex.toString()}`,
-        obj.querySelector(".todo-date")
+        JSON.stringify(obj.querySelector(".todo-date"))
       );
     }
 
@@ -52,13 +52,25 @@ export const dataStuff = (() => {
     else if (obj.classList.contains("project-item")) {
       localStorage.setItem(
         `project-title${projectIndex.toString()}`,
-        obj.querySelector("#project-title")
+        JSON.stringify(obj.querySelector("#project-title"))
       );
     }
   }
 
-  function setInfo(index) {
-    obj["todoTitle"] = localStorage.getItem("");
+  // this is unfinished
+  function sendToDoInfo(index) {
+    let title, priority, description, date, checkbox;
+    const obj;
+
+    title = JSON.parse(localStorage.getItem(`todo-title-${index}`));
+    priority = JSON.parse(localStorage.getItem(`todo-priority-${index}`));
+    description = JSON.parse(localStorage.getItem(`todo-description-button-${index}`));
+    date = JSON.parse(localStorage.getItem(`todo-date-${index}`));
+    checkbox = JSON.parse(localStorage.getItem(`todo-checkbox-${index}`));
+
+    obj.push(title, priority, description, date, checkbox);
+
+    return obj;
   }
 
   return { getFormsData, setFormsData, storeInfo };
