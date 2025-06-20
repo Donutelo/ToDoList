@@ -25,14 +25,15 @@ export const dataStuff = (() => {
     }
 
     // If it's a todo
-    if (obj.classList.contains("todo-item")){
+    if (obj.classList.contains("todo-item")) {
       localStorage.setItem(
         `todo-priority-${todoIndex.toString()}`,
         JSON.stringify(obj.querySelector(".todo-priority"))
       );
+      // it's relevant that I save this not for the edit forms, but for the 'ToDo' stay the same when the page reload
       localStorage.setItem(
         `todo-checkbox-${todoIndex.toString()}`,
-        JSON.stringify(obj.querySelector(".todo-checkbox"))
+        JSON.stringify(obj.querySelector(".todo-checkbox").checked)
       );
       localStorage.setItem(
         `todo-description-button-${todoIndex.toString()}`,
@@ -59,19 +60,30 @@ export const dataStuff = (() => {
 
   // this is unfinished
   function sendToDoInfo(index) {
+    /* what this do, exactly? well, it gets the data created with the forms 
+       and return as a object*/
+
     let title, priority, description, date, checkbox;
-    const obj;
+    const obj = {};
 
     title = JSON.parse(localStorage.getItem(`todo-title-${index}`));
     priority = JSON.parse(localStorage.getItem(`todo-priority-${index}`));
-    description = JSON.parse(localStorage.getItem(`todo-description-button-${index}`));
+    description = JSON.parse(
+      localStorage.getItem(`todo-description-button-${index}`)
+    );
     date = JSON.parse(localStorage.getItem(`todo-date-${index}`));
     checkbox = JSON.parse(localStorage.getItem(`todo-checkbox-${index}`));
 
-    obj.push(title, priority, description, date, checkbox);
+    // obj.push(title, priority, description, date, checkbox);
+
+    obj["title"] = title;
+    obj["priority"] = priority;
+    obj["description"] = description;
+    obj["date"] = date;
+    obj["checkbox"] = checkbox;
 
     return obj;
   }
 
-  return { getFormsData, setFormsData, storeInfo };
+  return { getFormsData, setFormsData, storeInfo, sendToDoInfo };
 })();

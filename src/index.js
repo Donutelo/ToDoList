@@ -48,6 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
   closeButtons.forEach((button) => {
     button.addEventListener("click", function (e) {
       e.preventDefault();
+      // ugly but ok
       DOMStuff.addHidden(button.parentElement.parentElement.parentElement);
     });
   });

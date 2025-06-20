@@ -8,7 +8,7 @@ let todoIndex = 1;
 
 /* With DOMStuff I mean showing and disappearing things */
 export const DOMStuff = (() => {
-  const todoContent = `<div class="todo-content">
+  /* const todoContent = `<div class="todo-content">
             <div class="todo-content-title">
               <label for="todo-title">Title: </label>
               <input
@@ -79,10 +79,117 @@ export const DOMStuff = (() => {
                 ...to do
               </button>
             </div>
-          </div>`;
+          </div>`; */
 
-  /* In progress */
-  const projectContent = `<div class="project-content">
+  // creating the todoContent the long way
+  const todoContent = document.createElement("div");
+  todoContent.classList.add("todo-content");
+
+  // --- Seção do Título ---
+  const todoContentTitle = document.createElement("div");
+  todoContentTitle.classList.add("todo-content-title");
+
+  const labelTitle = document.createElement("label");
+  labelTitle.setAttribute("for", "todo-title");
+  labelTitle.textContent = "Title: ";
+
+  const inputTitle = document.createElement("input");
+  inputTitle.setAttribute("id", "todo-title");
+  inputTitle.setAttribute("type", "text");
+  inputTitle.setAttribute("name", "todo-title");
+  inputTitle.setAttribute("placeholder", "Lesgo academy");
+  inputTitle.setAttribute("required", "");
+
+  todoContentTitle.appendChild(labelTitle);
+  todoContentTitle.appendChild(inputTitle);
+  todoContent.appendChild(todoContentTitle);
+
+  // --- Seção da Descrição ---
+  const todoContentDescription = document.createElement("div");
+  todoContentDescription.classList.add("todo-content-description");
+
+  const labelDescription = document.createElement("label");
+  labelDescription.setAttribute("for", "todo-description");
+  labelDescription.textContent = "Description: ";
+
+  const inputDescription = document.createElement("input");
+  inputDescription.setAttribute("id", "todo-description");
+  inputDescription.setAttribute("type", "text");
+  inputDescription.setAttribute("name", "todo-description");
+  inputDescription.setAttribute("placeholder", "Start pushing the ground");
+
+  todoContentDescription.appendChild(labelDescription);
+  todoContentDescription.appendChild(inputDescription);
+  todoContent.appendChild(todoContentDescription);
+
+  // data section
+  const todoContentDate = document.createElement("div");
+  todoContentDate.classList.add("todo-content-date");
+
+  const labelDate = document.createElement("label");
+  labelDate.setAttribute("for", "todo-due-date");
+  labelDate.textContent = "Due date: ";
+
+  const inputDate = document.createElement("input");
+  inputDate.setAttribute("type", "date");
+  inputDate.setAttribute("id", "todo-due-date");
+  inputDate.setAttribute("name", "todo-due-date");
+  inputDate.setAttribute("required", "");
+
+  todoContentDate.appendChild(labelDate);
+  todoContentDate.appendChild(inputDate);
+  todoContent.appendChild(todoContentDate);
+
+  // submission and priority section
+  const todoContentSubmission = document.createElement("div");
+  todoContentSubmission.classList.add("todo-content-submission");
+
+  const todoContentPriority = document.createElement("div");
+  todoContentPriority.classList.add("todo-content-priority");
+
+  const priorityParagraph = document.createElement("p");
+  priorityParagraph.textContent = "Priority:";
+  todoContentPriority.appendChild(priorityParagraph);
+
+  // helper function for radio button
+  function createPriorityRadioButton(value, text) {
+    const label = document.createElement("label");
+    label.classList.add(`todo-priority-${value}-button`);
+
+    const input = document.createElement("input");
+    input.setAttribute("type", "radio");
+    input.setAttribute("id", `todo-priority-${value}`);
+    input.setAttribute("name", "todo-priority");
+    input.setAttribute("value", value);
+    input.setAttribute("required", "");
+
+    label.appendChild(input);
+    label.appendChild(document.createTextNode(text));
+    return label;
+  }
+
+  // radio button
+  todoContentPriority.appendChild(createPriorityRadioButton("low", "Low"));
+  todoContentPriority.appendChild(
+    createPriorityRadioButton("medium", "Medium")
+  );
+  todoContentPriority.appendChild(createPriorityRadioButton("high", "High"));
+
+  todoContentSubmission.appendChild(todoContentPriority);
+
+  todoContent.appendChild(todoContentSubmission);
+
+  const submitButton = document.createElement("button");
+  submitButton.classList.add("todo-content-submit");
+  submitButton.setAttribute("type", "submit");
+  submitButton.setAttribute("value", "add to do");
+  submitButton.textContent = "...to do";
+
+  todoContent.appendChild(submitButton);
+
+  /* and now the project thing */
+
+  /* const projectContent = `<div class="project-content">
             <label for="project-title">Title: </label>
             <input
               id="project-title"
@@ -97,7 +204,32 @@ export const DOMStuff = (() => {
               >
                 ...project
               </button>
-          </div>`;
+          </div>`; 
+    */
+
+  const projectContent = document.createElement("div");
+  projectContent.classList.add("project-content");
+
+  // title
+  const labelProjectTitle = document.createElement("label");
+  labelProjectTitle.setAttribute("for", "project-title");
+  labelProjectTitle.textContent = "Title: ";
+  projectContent.appendChild(labelProjectTitle);
+
+  const inputProjectTitle = document.createElement("input");
+  inputProjectTitle.setAttribute("id", "project-title");
+  inputProjectTitle.setAttribute("type", "text");
+  inputProjectTitle.setAttribute("name", "project-title");
+  inputProjectTitle.setAttribute("required", "");
+  projectContent.appendChild(inputProjectTitle);
+
+  // submission section
+  const submitProjectButton = document.createElement("button");
+  submitProjectButton.classList.add("project-content-submit");
+  submitProjectButton.setAttribute("type", "submit");
+  submitProjectButton.setAttribute("value", "add project");
+  submitProjectButton.textContent = "...project";
+  projectContent.appendChild(submitProjectButton);
 
   const modal = document.querySelector(".create-new-content");
   const modalEditOverview = document.querySelector("#edit-forms-window");
@@ -119,7 +251,7 @@ export const DOMStuff = (() => {
       modalContent = projectContent;
     }
 
-    modal.innerHTML = modalContent;
+    modal.appendChild(modalContent);
   }
 
   function removeHidden(obj) {
@@ -185,9 +317,10 @@ export const DOMStuff = (() => {
     todoDueDate.classList.add("todo-date");
     todoDueDate.textContent = format(obj["todo-due-date"], "dd/MM");
 
-    // I should just add call an 'loadEditContent' here
     todoDescriptionButton.addEventListener("click", () => {
       removeHidden(modalEditOverview);
+      // I should just add call an 'loadEditContent' here
+      loadEditContent(todoDescriptionButton);
     });
 
     todoItem.appendChild(todoPriority);
@@ -203,7 +336,10 @@ export const DOMStuff = (() => {
   }
 
   function loadEditContent(obj) {
+    const toDoInfo = dataStuff.sendToDoInfo(obj.dataset.index);
+    const formsContent = document.querySelector(".edit-forms-content");
 
+    // formsContent.appendChild();
   }
 
   /*
