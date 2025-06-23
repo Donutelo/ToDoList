@@ -1,14 +1,23 @@
+import { todoIndex } from './UI.js';
+
 export const dataStuff = (() => {
   let allFormsData, formsData;
 
   let projectIndex = 1;
 
-  function getFormsData(forms) {
+  // should change this arguments
+  function getFormsData({
+    forms = {},
+    projectIndex = undefined,
+  } = {}) {
     // Kinda of a bad name, but I don't have any other ideias at the moment
     allFormsData = new FormData(forms);
     formsData = {};
 
     formsData = Object.fromEntries(allFormsData.entries());
+    formsData['index'] = todoIndex;
+
+    localStorage.setItem(`forms-index-${todoIndex}`, formsData);
   }
 
   function setFormsData() {
@@ -31,22 +40,17 @@ export const dataStuff = (() => {
         JSON.stringify(obj.querySelector(".todo-priority"))
       );
       // it's relevant that I save this not for the edit forms, but for the 'ToDo' stay the same when the page reload
-      localStorage.setItem(
-        `todo-checkbox-${todoIndex.toString()}`,
-        JSON.stringify(obj.querySelector(".todo-checkbox").checked)
-      );
-      localStorage.setItem(
-        `todo-description-button-${todoIndex.toString()}`,
-        JSON.stringify(obj.querySelector(".todo-description-button"))
-      );
-      localStorage.setItem(
-        `todo-title-${todoIndex.toString()}`,
-        JSON.stringify(obj.querySelector(".todo-title"))
-      );
-      localStorage.setItem(
-        `todo-date-${todoIndex.toString()}`,
-        JSON.stringify(obj.querySelector(".todo-date"))
-      );
+
+      const todoData = {
+        priority: obj.querySelector(".todo-priority").textContent, // Ou innerHTML, dependendo do conteúdo
+        checked: obj.querySelector(".todo-checkbox").checked,
+        description: obj.querySelector(".todo-description-button").textContent, // Se for o texto do botão
+        title: obj.querySelector(".todo-title").textContent,
+        date: obj.querySelector(".todo-date").value, // Ou value se for um input de data
+        index: todoIndex
+      };
+
+      localStorage.setItem(`todo-${todoIndex.toString()}`, JSON.stringify(todoData));
     }
 
     // if it's a project

@@ -4,7 +4,7 @@ import { format } from "date-fns";
 
 import { dataStuff } from "./data";
 
-let todoIndex = 1;
+export let todoIndex = 1;
 
 /* With DOMStuff I mean showing and disappearing things */
 export const DOMStuff = (() => {
