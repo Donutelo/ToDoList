@@ -336,7 +336,8 @@ export const DOMStuff = (() => {
   }
 
   function loadEditContent(obj) {
-    const toDoInfo = dataStuff.sendToDoInfo(obj.dataset.index);
+    // I misunderstand here, should have call the forms function
+    const toDoFormsInfo = dataStuff.sendToDoInfo(obj.dataset.index);
     const formsContent = document.querySelector(".edit-forms-content");
 
     // formsContent.appendChild();

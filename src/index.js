@@ -2,7 +2,7 @@ import "./css/styles.css";
 
 import { format, parseISO } from "date-fns";
 
-import { DOMStuff } from "./UI";
+import { DOMStuff, todoIndex } from "./UI";
 
 import { dataStuff } from "./data";
 
@@ -57,10 +57,10 @@ document.addEventListener("DOMContentLoaded", function () {
   /* Getting the form's data when submitted */
   modalForms.addEventListener("submit", function (e) {
     e.preventDefault();
-    dataStuff.getFormsData(this);
+    dataStuff.getFormsData({forms: this});
 
     // And object with all the forms data
-    formsData = dataStuff.setFormsData();
+    formsData = dataStuff.setFormsData(todoIndex);
 
     // Creating the ToDo by the UI
     const todoDOM = DOMStuff.addToDo(formsData);

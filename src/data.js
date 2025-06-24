@@ -17,11 +17,14 @@ export const dataStuff = (() => {
     formsData = Object.fromEntries(allFormsData.entries());
     formsData['index'] = todoIndex;
 
-    localStorage.setItem(`forms-index-${todoIndex}`, formsData);
+    localStorage.setItem(`forms-index-${todoIndex.toString()}`, JSON.stringify(formsData));
   }
 
-  function setFormsData() {
-    return formsData;
+  function setFormsData(index) {
+    let theFormsData = localStorage.getItem(`forms-index-${index.toString()}`);
+    theFormsData = JSON.parse(theFormsData);
+
+    return theFormsData;
   }
 
   function storeInfo({
@@ -42,11 +45,11 @@ export const dataStuff = (() => {
       // it's relevant that I save this not for the edit forms, but for the 'ToDo' stay the same when the page reload
 
       const todoData = {
-        priority: obj.querySelector(".todo-priority").textContent, // Ou innerHTML, dependendo do conteúdo
+        priority: obj.querySelector(`[class^="todo-priority-"]`).textContent,
         checked: obj.querySelector(".todo-checkbox").checked,
-        description: obj.querySelector(".todo-description-button").textContent, // Se for o texto do botão
+        description: obj.querySelector(".todo-description-button").querySelector("img"),
         title: obj.querySelector(".todo-title").textContent,
-        date: obj.querySelector(".todo-date").value, // Ou value se for um input de data
+        date: obj.querySelector(".todo-date").value,
         index: todoIndex
       };
 
