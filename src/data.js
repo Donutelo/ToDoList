@@ -1,4 +1,4 @@
-import { todoIndex } from './UI.js';
+import { todoIndex } from "./UI.js";
 
 export const dataStuff = (() => {
   let allFormsData, formsData;
@@ -6,18 +6,18 @@ export const dataStuff = (() => {
   let projectIndex = 1;
 
   // should change this arguments
-  function getFormsData({
-    forms = {},
-    projectIndex = undefined,
-  } = {}) {
+  function getFormsData({ forms = {}, projectIndex = undefined } = {}) {
     // Kinda of a bad name, but I don't have any other ideias at the moment
     allFormsData = new FormData(forms);
     formsData = {};
 
     formsData = Object.fromEntries(allFormsData.entries());
-    formsData['index'] = todoIndex;
+    formsData["index"] = todoIndex;
 
-    localStorage.setItem(`forms-index-${todoIndex.toString()}`, JSON.stringify(formsData));
+    localStorage.setItem(
+      `forms-index-${todoIndex.toString()}`,
+      JSON.stringify(formsData)
+    );
   }
 
   function setFormsData(index) {
@@ -47,13 +47,18 @@ export const dataStuff = (() => {
       const todoData = {
         priority: obj.querySelector(`[class^="todo-priority-"]`).textContent,
         checked: obj.querySelector(".todo-checkbox").checked,
-        description: obj.querySelector(".todo-description-button").querySelector("img"),
+        description: obj
+          .querySelector(".todo-description-button")
+          .querySelector("img"),
         title: obj.querySelector(".todo-title").textContent,
         date: obj.querySelector(".todo-date").value,
-        index: todoIndex
+        index: todoIndex,
       };
 
-      localStorage.setItem(`todo-${todoIndex.toString()}`, JSON.stringify(todoData));
+      localStorage.setItem(
+        `todo-${todoIndex.toString()}`,
+        JSON.stringify(todoData)
+      );
     }
 
     // if it's a project
@@ -70,9 +75,19 @@ export const dataStuff = (() => {
     /* what this do, exactly? well, it gets the data created with the forms 
        and return as a object*/
 
-    let title, priority, description, date, checkbox;
-    const obj = {};
+    const obj = {
+      index: index,
+      title: JSON.parse(localStorage.getItem(`todo-title-${index}`)),
+      priority: JSON.parse(localStorage.getItem(`todo-priority-${index}`)),
+      description: JSON.parse(
+        localStorage.getItem(`todo-description-button-${index}`)
+      ),
+      date: JSON.parse(localStorage.getItem(`todo-date-${index}`)),
+      checkbox: JSON.parse(localStorage.getItem(`todo-checkbox-${index}`)),
+    };
 
+    // i made the stupid way
+    /*
     title = JSON.parse(localStorage.getItem(`todo-title-${index}`));
     priority = JSON.parse(localStorage.getItem(`todo-priority-${index}`));
     description = JSON.parse(
@@ -88,8 +103,15 @@ export const dataStuff = (() => {
     obj["description"] = description;
     obj["date"] = date;
     obj["checkbox"] = checkbox;
+    */
 
     return obj;
+  }
+
+  function editToDoInfo(index, newTodoInfo) {
+    let todoInfo = localStorage.getItem(`todo-${index.toString()}`);
+
+    todoInfo = JSON.parse(todoInfo);
   }
 
   return { getFormsData, setFormsData, storeInfo, sendToDoInfo };

@@ -68,12 +68,13 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Do later.
-  // let formsEditData;
   // Getting the form's edit data when submitted
-  // modalFormsEdit.addEventListener("submit", function (e) {
-  //   e.preventDefault();
-  //   dataStuff.getFormsDate(this);
+  modalFormsEdit.addEventListener("submit", function (e) {
+    e.preventDefault();
+    dataStuff.getFormsDate({forms: this});
 
-  //   formsData = data
-  // });
+    
+
+  });
+
 });

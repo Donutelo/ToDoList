@@ -262,8 +262,6 @@ export const DOMStuff = (() => {
     if (obj.classList.contains("hidden")) {
       obj.classList.remove("hidden");
     }
-
-    console.log("teste");
   }
 
   function addHidden(obj) {
@@ -337,8 +335,19 @@ export const DOMStuff = (() => {
 
   function loadEditContent(obj) {
     // I misunderstand here, should have call the forms function
-    const toDoFormsInfo = dataStuff.setFormsData(obj.dataset.index);
-    const formsContent = document.querySelector(".edit-forms-content");
+    const toDoFormsInfo = dataStuff.setFormsData(
+      obj.parentElement.dataset.index
+    );
+    let formsContent = document.querySelector(".edit-forms-content");
+    formsContent.innerHTML = "";
+
+    const clonedNodes = Array.from(todoContent.children).map((node) =>
+      node.cloneNode(true)
+    );
+
+    clonedNodes.forEach((node) => {
+      formsContent.appendChild(node);
+    });
 
     // formsContent.appendChild();
   }
