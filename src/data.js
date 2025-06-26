@@ -6,7 +6,7 @@ export const dataStuff = (() => {
   let projectIndex = 1;
 
   // should change this arguments
-  function getFormsData({ forms = {}, projectIndex = undefined } = {}) {
+  function getFormsData({ forms = {}, projectIndex = undefined} = {}) {
     // Kinda of a bad name, but I don't have any other ideias at the moment
     allFormsData = new FormData(forms);
     formsData = {};
@@ -18,6 +18,10 @@ export const dataStuff = (() => {
       `forms-index-${todoIndex.toString()}`,
       JSON.stringify(formsData)
     );
+  }
+
+  function editFormsData ({forms = {}, specifTodoIndex = undefined, projectIndex = {}}) {
+    
   }
 
   function setFormsData(index) {
@@ -114,5 +118,5 @@ export const dataStuff = (() => {
     todoInfo = JSON.parse(todoInfo);
   }
 
-  return { getFormsData, setFormsData, storeInfo, sendToDoInfo };
+  return { getFormsData, setFormsData, storeInfo, sendToDoInfo, editFormsData };
 })();

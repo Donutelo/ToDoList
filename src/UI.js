@@ -335,9 +335,10 @@ export const DOMStuff = (() => {
 
   function loadEditContent(obj) {
     // I misunderstand here, should have call the forms function
-    const toDoFormsInfo = dataStuff.setFormsData(
-      obj.parentElement.dataset.index
-    );
+    // getting the todo index, since is the same as the forms
+    let todoFormsIndex = obj.parentElement.dataset.index;
+
+    const toDoFormsInfo = dataStuff.setFormsData(todoFormsIndex);
     let formsContent = document.querySelector(".edit-forms-content");
     formsContent.innerHTML = "";
 

@@ -71,10 +71,9 @@ document.addEventListener("DOMContentLoaded", function () {
   // Getting the form's edit data when submitted
   modalFormsEdit.addEventListener("submit", function (e) {
     e.preventDefault();
-    dataStuff.getFormsDate({forms: this});
+    dataStuff.editFormsData({forms: this});
 
     
-
   });
 
 });
