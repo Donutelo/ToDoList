@@ -42,10 +42,6 @@ export const dataStuff = (() => {
 
     // If it's a todo
     if (obj.classList.contains("todo-item")) {
-      localStorage.setItem(
-        `todo-priority-${todoIndex.toString()}`,
-        JSON.stringify(obj.querySelector(".todo-priority"))
-      );
       // it's relevant that I save this not for the edit forms, but for the 'ToDo' stay the same when the page reload
 
       const todoData = {

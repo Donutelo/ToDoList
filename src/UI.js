@@ -334,7 +334,7 @@ export const DOMStuff = (() => {
   }
 
   function loadEditContent(obj) {
-    // I misunderstand here, should have call the forms function
+    // I misunderstood here, should have call the forms function
     // getting the todo index, since is the same as the forms
     let todoFormsIndex = obj.parentElement.dataset.index;
 
