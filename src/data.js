@@ -20,6 +20,7 @@ export const dataStuff = (() => {
     );
   }
 
+  // This shoud change the data store in the getFormsData, how I still don't know how
   function editFormsData ({forms = {}, specifTodoIndex = undefined, projectIndex = {}}) {
     
   }
@@ -109,9 +110,10 @@ export const dataStuff = (() => {
   }
 
   function editToDoInfo(index, newTodoInfo) {
-    let todoInfo = localStorage.getItem(`todo-${index.toString()}`);
+    //relatively unsafe, but ok for now
+    let todoInfo = JSON.parse(localStorage.getItem(`todo-${index}`));
 
-    todoInfo = JSON.parse(todoInfo);
+    
   }
 
   return { getFormsData, setFormsData, storeInfo, sendToDoInfo, editFormsData };

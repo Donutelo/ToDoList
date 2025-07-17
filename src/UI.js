@@ -1,4 +1,4 @@
-import iconImage from "/workspaces/ToDoList/src/images/editImage.png";
+import iconImage from "../src/images/editImage.png";
 
 import { format } from "date-fns";
 
@@ -251,6 +251,7 @@ export const DOMStuff = (() => {
       modalContent = projectContent;
     }
 
+    modal.innerHTML = '';
     modal.appendChild(modalContent);
   }
 
@@ -338,7 +339,8 @@ export const DOMStuff = (() => {
     // getting the todo index, since is the same as the forms
     let todoFormsIndex = obj.parentElement.dataset.index;
 
-    const toDoFormsInfo = dataStuff.setFormsData(todoFormsIndex);
+    const toDoFormsInfo = dataStuff.setFormsData(todoFormsIndex); // Completely useless?
+  
     let formsContent = document.querySelector(".edit-forms-content");
     formsContent.innerHTML = "";
 

@@ -74,6 +74,8 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault();
     dataStuff.editFormsData({forms: this});
 
+    newToDoInfo = dataStuff.setFormsData();
+
     
   });
 
