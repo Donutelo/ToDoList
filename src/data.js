@@ -9,6 +9,7 @@ export const dataStuff = (() => {
   function getFormsData({ forms = {}, projectIndex = undefined} = {}) {
     // Kinda of a bad name, but I don't have any other ideias at the moment
     allFormsData = new FormData(forms);
+
     formsData = {};
 
     formsData = Object.fromEntries(allFormsData.entries());
@@ -20,7 +21,7 @@ export const dataStuff = (() => {
     );
   }
 
-  // This shoud change the data store in the getFormsData, how I still don't know how
+  // This shoud change the data store in the getFormsData, how I still don't know
   function editFormsData ({forms = {}, specifTodoIndex = undefined, projectIndex = {}}) {
     
   }
@@ -112,9 +113,9 @@ export const dataStuff = (() => {
   function editToDoInfo(index, newTodoInfo) {
     //relatively unsafe, but ok for now
     let todoInfo = JSON.parse(localStorage.getItem(`todo-${index}`));
-
     
+
   }
 
-  return { getFormsData, setFormsData, storeInfo, sendToDoInfo, editFormsData };
+  return { getFormsData, setFormsData, storeInfo, sendToDoInfo, editFormsData, editToDoInfo };
 })();

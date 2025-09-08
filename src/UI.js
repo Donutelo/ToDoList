@@ -251,7 +251,7 @@ export const DOMStuff = (() => {
       modalContent = projectContent;
     }
 
-    modal.innerHTML = '';
+    modal.innerHTML = "";
     modal.appendChild(modalContent);
   }
 
@@ -338,9 +338,14 @@ export const DOMStuff = (() => {
     // I misunderstood here, should have call the forms function
     // getting the todo index, since is the same as the forms
     let todoFormsIndex = obj.parentElement.dataset.index;
+    const modalFormsEdit = document.querySelector(".edit-forms");
+
+    modalFormsEdit.dataset.index = "";
+    modalFormsEdit.dataset.index = todoFormsIndex;
 
     const toDoFormsInfo = dataStuff.setFormsData(todoFormsIndex); // Completely useless?
-  
+
+    // I have to change this, but one thing at the time
     let formsContent = document.querySelector(".edit-forms-content");
     formsContent.innerHTML = "";
 

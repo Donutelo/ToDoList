@@ -74,8 +74,12 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault();
     dataStuff.editFormsData({forms: this});
 
-    newToDoInfo = dataStuff.setFormsData();
+    // Getting the forms and sending to the newToDoInfo
+    let todoFormsIndex = modalFormsEdit.dataset.index;
+    newToDoInfo = dataStuff.setFormsData(todoFormsIndex);
 
+    // In here I should call the editToDoInfo
+    dataStuff.editToDoInfo(todoFormsIndex, newToDoInfo);
     
   });
 
