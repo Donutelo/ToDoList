@@ -435,6 +435,10 @@ footer p a {
   transform: translateX(100vw);
 }
 
+.transparent {
+  color: transparent;
+}
+
 @media (max-width: 700px) {
   .content {
     display: grid;

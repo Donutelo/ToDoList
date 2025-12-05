@@ -1,6 +1,6 @@
 import iconImage from "../src/images/editImage.png";
 
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 
 import { dataStuff } from "./data";
 
@@ -207,6 +207,7 @@ export const DOMStuff = (() => {
           </div>`; 
     */
 
+  // the project things
   const projectContent = document.createElement("div");
   projectContent.classList.add("project-content");
 
@@ -275,6 +276,16 @@ export const DOMStuff = (() => {
     }
   }
 
+  function addTransparent(obj) {
+    if (obj === null) {
+      return;
+    }
+
+    if (!obj.classList.contains("tranparent")) {
+      obj.classList.add("transparent");
+    }
+  }
+
   function addToDo(obj) {
     if (obj === null) {
       return;
@@ -284,21 +295,29 @@ export const DOMStuff = (() => {
     todoItem.classList.add("todo-item");
     todoItem.dataset.index = todoIndex;
 
+    // I shouldn't had create this, but now it's annoying to change
     const todoPriority = document.createElement("div");
 
     if (obj["todo-priority"] === "low") {
       todoPriority.classList.add("todo-priority-low");
+      todoPriority.textContent = "low";
     } else if (obj["todo-priority"] === "medium") {
       todoPriority.classList.add("todo-priority-medium");
+      todoPriority.textContent = "medium";
     } else if (obj["todo-priority"] === "high") {
       todoPriority.classList.add("todo-priority-high");
+      todoPriority.textContent = "high";
     }
+
+    DOMStuff.addTransparent(todoPriority);
 
     const todoCheckbox = document.createElement("label");
     todoCheckbox.classList.add("todo-checkbox");
 
     const todoInputCheckbox = document.createElement("input");
     todoInputCheckbox.setAttribute("type", "checkbox");
+
+    
 
     todoCheckbox.appendChild(todoInputCheckbox);
 
@@ -314,11 +333,12 @@ export const DOMStuff = (() => {
 
     const todoDueDate = document.createElement("div");
     todoDueDate.classList.add("todo-date");
-    todoDueDate.textContent = format(obj["todo-due-date"], "dd/MM");
+    let todoDueDateText = parseISO(obj["todo-due-date"]);
+    todoDueDate.textContent = format(todoDueDateText, "dd//MM");
 
     todoDescriptionButton.addEventListener("click", () => {
       removeHidden(modalEditOverview);
-      // I should just add call an 'loadEditContent' here
+      // I should just call an 'loadEditContent' here
       loadEditContent(todoDescriptionButton);
     });
 
@@ -329,9 +349,34 @@ export const DOMStuff = (() => {
     todoItem.appendChild(todoDueDate);
 
     // Putting in the storage
-    dataStuff.storeInfo({ obj: todoItem, todoIndex: todoIndex });
+    dataStuff.storeInfo({ obj: obj, todoIndex: todoIndex });
     todoIndex = todoIndex + 1;
     return todoItem;
+  }
+
+  function editToDo(index, todoInfo) {
+    // this will be the last stop from the edit
+    // it will start in the index, pass to data and end here
+
+    // take the new proprerties into variables
+    const priority = todoInfo["todo-priority"];
+    const dueDate = todoInfo["todo-due-date"];
+    const title = todoInfo["todo-title"];
+
+    const todoItem = document.querySelector(`.todo-item[data-index="${index}"]`);
+
+    // taking the old properties from the DOM
+    const todoPriority = todoItem.querySelector('[class^="todo-priority-"]');
+    const todoDueDate = todoItem.querySelector(".todo-date");
+    const todoTitle = todoItem.querySelector(".todo-title");
+    
+    // updating
+    todoTitle.textContent = title;
+    todoDueDate.textContent = format(dueDate, "dd/MM");
+    
+    todoPriority.classList = "";
+    todoPriority.classList.add("todo-priority-" + priority);
+    todoPriority.classList.add("transparent");
   }
 
   function loadEditContent(obj) {
@@ -343,9 +388,10 @@ export const DOMStuff = (() => {
     modalFormsEdit.dataset.index = "";
     modalFormsEdit.dataset.index = todoFormsIndex;
 
-    const toDoFormsInfo = dataStuff.setFormsData(todoFormsIndex); // Completely useless?
+    // const toDoFormsInfo = dataStuff.setFormsData(todoFormsIndex); // Completely useless?
 
     // I have to change this, but one thing at the time
+    // why do I have to change this?
     let formsContent = document.querySelector(".edit-forms-content");
     formsContent.innerHTML = "";
 
@@ -379,5 +425,5 @@ export const DOMStuff = (() => {
   project.classList.add("project-item");
   */
 
-  return { showModal, addHidden, removeHidden, addToDo };
+  return { showModal, addHidden, removeHidden, addToDo, editToDo, addTransparent };
 })();

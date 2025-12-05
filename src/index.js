@@ -15,9 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
   );
 
   const closeButtons = document.querySelectorAll(".close-button");
-
   const modalOverview = document.querySelector("#create-new-window");
-
   const mainContent = document.querySelector(".main-content");
 
   // The forms
@@ -57,10 +55,10 @@ document.addEventListener("DOMContentLoaded", function () {
   /* Getting the form's data when submitted */
   modalForms.addEventListener("submit", function (e) {
     e.preventDefault();
-    dataStuff.getFormsData({forms: this});
+    dataStuff.setFormsData({ forms: this });
 
     // And object with all the forms data
-    formsData = dataStuff.setFormsData(todoIndex);
+    formsData = dataStuff.getFormsData({ forms: {}, index: todoIndex });
 
     // Creating the ToDo by the UI
     const todoDOM = DOMStuff.addToDo(formsData);
@@ -72,15 +70,19 @@ document.addEventListener("DOMContentLoaded", function () {
   // Getting the form's edit data when submitted
   modalFormsEdit.addEventListener("submit", function (e) {
     e.preventDefault();
-    dataStuff.editFormsData({forms: this});
+    // Why I am trying to edit the forms before getting the information?
+    // Using this todoIndex sounds dangerous
+    dataStuff.editFormsData({ forms: this, todoIndex: todoIndex });
 
     // Getting the forms and sending to the newToDoInfo
     let todoFormsIndex = modalFormsEdit.dataset.index;
-    newToDoInfo = dataStuff.setFormsData(todoFormsIndex);
+    let newToDoInfo = dataStuff.getFormsData({ forms: this });
 
     // In here I should call the editToDoInfo
     dataStuff.editToDoInfo(todoFormsIndex, newToDoInfo);
-    
+
+    // Changing in the UI
   });
 
+  
 });
