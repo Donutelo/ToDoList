@@ -4,7 +4,7 @@ import { format, parseISO } from "date-fns";
 
 import { dataStuff } from "./data";
 
-export let todoIndex = 1;
+import { optionsWithListener, todoIndex, projectIndex, addTodoIndex, addProjectIndex } from "./options";
 
 /* With DOMStuff I mean showing and disappearing things */
 export const DOMStuff = (() => {
@@ -85,7 +85,7 @@ export const DOMStuff = (() => {
   const todoContent = document.createElement("div");
   todoContent.classList.add("todo-content");
 
-  // --- Seção do Título ---
+  // --- Seção do Título --- 
   const todoContentTitle = document.createElement("div");
   todoContentTitle.classList.add("todo-content-title");
 
@@ -174,10 +174,35 @@ export const DOMStuff = (() => {
     createPriorityRadioButton("medium", "Medium")
   );
   todoContentPriority.appendChild(createPriorityRadioButton("high", "High"));
-
   todoContentSubmission.appendChild(todoContentPriority);
-
   todoContent.appendChild(todoContentSubmission);
+
+  // dropdown part
+  const dropdownDivProjects = document.createElement("div");
+  dropdownDivProjects.classList.add("dropdown");
+
+  const dropdownTitleProject = document.createElement("div");
+  dropdownTitleProject.classList.add("dropdown-title");
+  dropdownTitleProject.textContent = "Select a project:";
+  dropdownTitleProject.addEventListener("click", toggleMenuDisplay);
+
+  const dropdownRightArrow = document.createElement("i");
+  dropdownRightArrow.classList.add("fa", "fa-angle-right");
+  dropdownTitleProject.appendChild(dropdownRightArrow);
+
+  const dropdownProjects = document.createElement("div");
+  dropdownProjects.classList.add("dropdown-menu", "hidden");
+
+  const dropdownProjectsItem = document.createElement("div");
+  dropdownProjectsItem.classList.add("option");
+  dropdownProjectsItem.textContent = "test project";
+  dropdownProjectsItem.addEventListener("click", handleOptionSelected);
+  optionsWithListener.add(dropdownProjectsItem);
+  dropdownProjects.appendChild(dropdownProjectsItem);
+
+  dropdownDivProjects.appendChild(dropdownTitleProject);
+  dropdownDivProjects.appendChild(dropdownProjects);
+  todoContent.appendChild(dropdownDivProjects);
 
   const submitButton = document.createElement("button");
   submitButton.classList.add("todo-content-submit");
@@ -317,8 +342,6 @@ export const DOMStuff = (() => {
     const todoInputCheckbox = document.createElement("input");
     todoInputCheckbox.setAttribute("type", "checkbox");
 
-    
-
     todoCheckbox.appendChild(todoInputCheckbox);
 
     const todoDescriptionButton = document.createElement("button");
@@ -350,7 +373,7 @@ export const DOMStuff = (() => {
 
     // Putting in the storage
     dataStuff.storeInfo({ obj: obj, todoIndex: todoIndex });
-    todoIndex = todoIndex + 1;
+    addTodoIndex();
     return todoItem;
   }
 
@@ -363,17 +386,19 @@ export const DOMStuff = (() => {
     const dueDate = todoInfo["todo-due-date"];
     const title = todoInfo["todo-title"];
 
-    const todoItem = document.querySelector(`.todo-item[data-index="${index}"]`);
+    const todoItem = document.querySelector(
+      `.todo-item[data-index="${index}"]`
+    );
 
     // taking the old properties from the DOM
     const todoPriority = todoItem.querySelector('[class^="todo-priority-"]');
     const todoDueDate = todoItem.querySelector(".todo-date");
     const todoTitle = todoItem.querySelector(".todo-title");
-    
+
     // updating
     todoTitle.textContent = title;
     todoDueDate.textContent = format(dueDate, "dd/MM");
-    
+
     todoPriority.classList = "";
     todoPriority.classList.add("todo-priority-" + priority);
     todoPriority.classList.add("transparent");
@@ -425,5 +450,64 @@ export const DOMStuff = (() => {
   project.classList.add("project-item");
   */
 
-  return { showModal, addHidden, removeHidden, addToDo, editToDo, addTransparent };
+  function toggleMenuDisplay(e) {
+    const trigger = e.currentTarget;
+    // busca o ancestor mais próximo com a classe .dropdown (mais robusto que parentNode)
+    const dropdown = trigger.closest(".dropdown");
+    if (!dropdown) return;
+
+    const menu = dropdown.querySelector(".dropdown-menu");
+    const icon = dropdown.querySelector(".fa-angle-right");
+
+    if (menu) menu.classList.toggle("hidden");
+    if (icon) icon.classList.toggle("rotate-90");
+  }
+
+  function handleOptionSelected(e) {
+    const dropdown = e.currentTarget.closest(".dropdown");
+    const menu = dropdown.querySelector(".dropdown-menu");
+    const title = dropdown.querySelector(".dropdown-title");
+    const icon = title.querySelector(".fa");
+    const option = e.target;
+
+    // Atualizar título
+    title.firstChild.textContent = option.textContent + " ";
+
+    // Fechar menu
+    menu.classList.toggle("hidden");
+
+    // Disparar evento customizado
+    title.dispatchEvent(new Event("change"));
+
+    // Aplicar rotação do ícone com transição funcionando
+    setTimeout(() => {
+      icon.classList.toggle("rotate-90");
+    }, 0);
+  }
+
+  function insertProject(obj) {
+    let projectList = document.querySelector(".project-list");
+    let newProject = document.createElement("li");
+    let hashtag = document.createElement("i");
+
+    hashtag.classList.add("fa-solid", "fa-hashtag");
+    newProject.appendChild(hashtag);
+    newProject.classList.add("project-item");
+    newProject.appendChild(document.createTextNode(`${obj["project-title"]}`));
+    projectList.appendChild(newProject);
+
+    // dataStuff.storeInfo({ obj: obj, projectIndex: projectIndex });
+    addProjectIndex();
+  }
+
+  return {
+    showModal,
+    addHidden,
+    removeHidden,
+    addToDo,
+    editToDo,
+    addTransparent,
+    handleOptionSelected,
+    insertProject
+  };
 })();

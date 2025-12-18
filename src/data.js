@@ -1,92 +1,56 @@
-import { todoIndex } from "./UI.js";
-
 import { format, parseISO } from "date-fns";
 
 import { DOMStuff } from "./UI.js";
 
+import { todoIndex, projectIndex } from "./options.js";
+
 export const dataStuff = (() => {
   let allFormsData, formsData;
 
-  let projectIndex = 1;
-
   // should change this arguments
-  function setFormsData({ forms = {}, projectIndex = undefined } = {}) {
+  function setFormsData({ forms = {} } = {}) {
     // Kinda of a bad name, but I don't have any other ideias at the moment
     allFormsData = new FormData(forms);
 
     formsData = Object.fromEntries(allFormsData.entries());
-    formsData["index"] = todoIndex;
-    let todoDueDate = parseISO(formsData["todo-due-date"]);
-    formsData["todo-due-date"] = todoDueDate;
+    if (formsData["todo-description"]) {
+      formsData["index"] = todoIndex;
+      let todoDueDate = parseISO(formsData["todo-due-date"]);
+      formsData["todo-due-date"] = todoDueDate;
 
-    localStorage.setItem(`forms-index-${todoIndex}`, JSON.stringify(formsData));
+      localStorage.setItem(
+        `forms-index-${todoIndex}`,
+        JSON.stringify(formsData)
+      );
+    } else if (formsData["project-title"]) {
+      formsData["index"] = projectIndex;
+
+      localStorage.setItem(
+        `project-index-${projectIndex}`,
+        JSON.stringify(formsData)
+      );
+    }
   }
 
-  // This shoud change the data store in the getFormsData, how I still don't know
-  function editFormsData({
-    forms = {},
-    todoIndex = undefined,
-  }) {
-    
-  }
+  // This should change the data store in the getFormsData, how I still don't know
+  function editFormsData({ forms = {} }) {}
 
-  // I change the order, the get is setting and the set is getting. DAAAAMMMMMMM
-  function getFormsData({ forms = {}, index = undefined } = {}) {
+  // I change the order, the get is setting and the set is getting. DAAAAMMMMMMMNNNNNN
+  function getFormsData({ forms = {} } = {}) {
     // Terrible names, but no other ideas at the moment
     let allFormsData;
-    let theFormsData;
+    let theFormsData = undefined;
 
     if (Object.keys(forms).length !== 0) {
       allFormsData = new FormData(forms);
       theFormsData = Object.fromEntries(allFormsData.entries());
-    } else if (index !== undefined) {
-      theFormsData = JSON.parse(localStorage.getItem(`forms-index-${index}`));
     }
+
+    /*else if (todoIndex !== undefined) {
+      theFormsData = JSON.parse(localStorage.getItem(`forms-index-${todoIndex}`));
+    }*/
 
     return theFormsData;
-  }
-
-  function storeInfo({
-    /* add the todo or project directly from the DOM, won't work otherwise */
-
-    obj = {},
-    todoIndex = undefined,
-    projectIndex = undefined,
-  } = {}) {
-    if (obj === null) {
-      return;
-    }
-
-    // If it's a todo
-    if (obj["todo-title"] != undefined) {
-      // it's relevant that I save this not for the edit forms, but for the 'ToDo' stay the same when the page reload
-      // wich still isn't happening
-
-      const teste = obj["todo-due-date"];
-      teste;
-
-      const todoData = {
-        priority: obj["todo-priority"],
-        checked: false,
-        description: obj["todo-description"],
-        title: obj["todo-title"],
-        date: format(obj["todo-due-date"], "dd/MM/yy"),
-        index: todoIndex,
-      };
-
-      localStorage.setItem(
-        `todo-${todoIndex.toString()}`,
-        JSON.stringify(todoData)
-      );
-    }
-
-    // if it's a project
-    else if (obj.classList.contains("project-item")) {
-      localStorage.setItem(
-        `project-title${projectIndex.toString()}`,
-        JSON.stringify(obj.querySelector("#project-title"))
-      );
-    }
   }
 
   // this is unfinished
@@ -142,6 +106,35 @@ export const dataStuff = (() => {
     localStorage.setItem(`todo-${index}`, JSON.stringify(todoInfo));
 
     DOMStuff.editToDo(index, newTodoInfo);
+  }
+
+  function storeInfo({
+    obj = {},
+    todoIndex = undefined,
+    projectIndex = undefined,
+  } = {}) {
+    if (obj === null) {
+      return;
+    }
+
+    // If it's a todo
+    if (obj["todo-title"]) {
+      // it's relevant that I save this not for the edit forms, but for the 'ToDo' stay the same when the page reload
+
+      const todoData = {
+        priority: obj["todo-priority"],
+        checked: false,
+        description: obj["todo-description"],
+        title: obj["todo-title"],
+        date: format(obj["todo-due-date"], "dd/MM/yy"),
+        index: todoIndex,
+      };
+
+      localStorage.setItem(
+        `todo-${todoIndex.toString()}`,
+        JSON.stringify(todoData)
+      );
+    }
   }
 
   return {
