@@ -199,11 +199,19 @@ header nav ul {
 }
 
 .todo-description-button {
-  margin-left: auto;
+  margin-left: 10px;
   margin-right: 10px;
 }
 
 .todo-description-button > img {
+  height: 20px;
+}
+
+.todo-delete-button {
+  margin-left: auto;
+}
+
+.todo-delete-button > img {
   height: 20px;
 }
 

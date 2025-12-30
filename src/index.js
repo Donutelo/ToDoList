@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const closeButtons = document.querySelectorAll(".close-button");
   const modalOverview = document.querySelector("#create-new-window");
-  const mainContent = document.querySelector(".main-content");
 
   // The forms
   const modalForms = document.querySelector(".create-new");
@@ -30,57 +29,56 @@ document.addEventListener("DOMContentLoaded", function () {
   const mainContainer = document.querySelector(".main-content");
 
   mainContainer.addEventListener("change", (event) => {
-    if (event.target instanceof HTMLInputElement &&
-      event.target.type === "checkbox") {
-        let dataIndex = Number(event.target.closest(".todo-item").dataset.index);
-        const obj = JSON.parse(localStorage.getItem(`todo-${dataIndex}`));
-        const status = event.target.checked
-        obj.checked = status;
-        localStorage.setItem(`todo-${dataIndex}`, JSON.stringify(obj));
-      }
-  });
-
-  // Project stuff, a listener if a project is added
-  const container = document.querySelector(".project-list");
-
-  const observer = new MutationObserver((mutationsList) => {
-    for (const mutation of mutationsList) {
-      if (mutation.type === "childList") {
-        const options = document.querySelectorAll(".dropdown-menu .option");
-        options.forEach((option) => {
-          if (!optionsWithListener.has(option)) {
-            option.addEventListener("click", DOMStuff.handleOptionSelected);
-            optionsWithListener.add(option);
-          }
-        });
-      }
+    if (
+      event.target instanceof HTMLInputElement &&
+      event.target.type === "checkbox"
+    ) {
+      let dataIndex = Number(event.target.closest(".todo-item").dataset.index);
+      const obj = JSON.parse(localStorage.getItem(`todo-${dataIndex}`));
+      const status = event.target.checked;
+      obj.checked = status;
+      localStorage.setItem(`todo-${dataIndex}`, JSON.stringify(obj));
     }
   });
-
-  observer.observe(container, { childList: true });
 
   // if there is already data in the local storage
   var lclStogareLen = localStorage.length;
 
   if (lclStogareLen > 0) {
-    let formsKeys = [],
-      todoKeys = [];
+    DOMStuff.loadAllToDos(lclStogareLen);
+    DOMStuff.loadAllProjects(lclStogareLen);
+  }
 
-    for (let i = 0; i < lclStogareLen; i++) {
+  /* Event listener for the 'All' in the sidebar */
+  const allButton = document.querySelector(".all-tasks");
+
+  allButton.addEventListener("click", () => {
+    DOMStuff.loadAllToDos(lclStogareLen);
+  });
+
+  /* Event listener for the 'Week' in the sidebar */
+  const weekButton = document.querySelector(".week-tasks");
+
+  weekButton.addEventListener("click", () => {
+    mainContainer.innerHTML = "";
+    const currentDate = new Date();
+    const nextWeek = new Date(currentDate);
+    nextWeek.setDate(currentDate.getDate() + 7);
+
+    for (let i = 0; i < localStorage.length; i++) {
       let key = localStorage.key(i);
       let value = localStorage.getItem(key);
+      let test = JSON.parse(value);
 
       if (key.startsWith("forms-index-")) {
-        formsKeys.push(key);
-        const todoDOM = DOMStuff.addToDo(JSON.parse(value));
-        addToDoDOM(todoDOM);
-      } else if (key.startsWith("todo-index-")) {
-        todoKeys.push(key); // what should I do with this?
-      } else if (key.startsWith("project-index-")) {
-        DOMStuff.insertProject(JSON.parse(value));
+        let todoDueDate = new Date(JSON.parse(value)["todo-due-date"]);
+        if (todoDueDate >= currentDate && todoDueDate <= nextWeek) {
+          const todoDOM = DOMStuff.addToDo(JSON.parse(value));
+          DOMStuff.addToDoDOM(todoDOM);
+        }
       }
     }
-  }
+  });
 
   /* Event listener in the modal overview button */
   modalOverviewButton.addEventListener("click", () => {
@@ -104,26 +102,25 @@ document.addEventListener("DOMContentLoaded", function () {
   closeButtons.forEach((button) => {
     button.addEventListener("click", function (e) {
       e.preventDefault();
-      // ugly but ok
+      // ugly but ok, I think
       DOMStuff.addHidden(button.parentElement.parentElement.parentElement);
     });
   });
 
-  let formsData;
   // Getting the form's data when submitted
   modalForms.addEventListener("submit", function (e) {
     e.preventDefault();
     dataStuff.setFormsData({ forms: this });
 
     // And object with all the forms data
-    formsData = dataStuff.getFormsData({ forms: this });
+    let formsData = dataStuff.getFormsData({ forms: this });
 
     if (formsData === undefined) {
       throw new Error("The forms is empty or something.");
     } else if (formsData["todo-description"]) {
       // Creating the ToDo by the UI
       const todoDOM = DOMStuff.addToDo(formsData);
-      addToDoDOM(todoDOM);
+      DOMStuff.addToDoDOM(todoDOM);
     } else if (formsData["project-title"]) {
       // well, now what again? this should put the project in the sidebar
       DOMStuff.insertProject(formsData);
@@ -146,8 +143,4 @@ document.addEventListener("DOMContentLoaded", function () {
     // In here I should call the editToDoInfo
     dataStuff.editToDoInfo(todoFormsIndex, newToDoInfo);
   });
-
-  function addToDoDOM(todoDOM) {
-    mainContent.appendChild(todoDOM);
-  }
 });

@@ -33,7 +33,7 @@ export const dataStuff = (() => {
   }
 
   // This should change the data store in the getFormsData, how I still don't know
-  function editFormsData({ forms = {} }) {}
+  // function editFormsData({ forms = {} }) {}
 
   // I change the order, the get is setting and the set is getting. DAAAAMMMMMMMNNNNNN
   function getFormsData({ forms = {} } = {}) {
@@ -127,6 +127,7 @@ export const dataStuff = (() => {
         description: obj["todo-description"],
         title: obj["todo-title"],
         date: format(obj["todo-due-date"], "dd/MM/yy"),
+        project: obj["todo-project"],
         index: todoIndex,
       };
 
@@ -137,12 +138,18 @@ export const dataStuff = (() => {
     }
   }
 
+  function deleteTodoInfo(obj) {
+    let dataIndex = obj.dataset.index;
+    localStorage.removeItem(`todo-${dataIndex}`);
+    localStorage.removeItem(`forms-index-${dataIndex}`);
+  }
+
   return {
     getFormsData,
     setFormsData,
     storeInfo,
     sendToDoInfo,
-    editFormsData,
     editToDoInfo,
+    deleteTodoInfo,
   };
 })();

@@ -1,10 +1,18 @@
 import iconImage from "../src/images/editImage.png";
 
+import deleteIcon from "../src/images/deleteIcon.png";
+
 import { format, parseISO } from "date-fns";
 
 import { dataStuff } from "./data";
 
-import { optionsWithListener, todoIndex, projectIndex, addTodoIndex, addProjectIndex } from "./options";
+import {
+  optionsWithListener,
+  todoIndex,
+  projectIndex,
+  addTodoIndex,
+  addProjectIndex,
+} from "./options";
 
 /* With DOMStuff I mean showing and disappearing things */
 export const DOMStuff = (() => {
@@ -85,7 +93,7 @@ export const DOMStuff = (() => {
   const todoContent = document.createElement("div");
   todoContent.classList.add("todo-content");
 
-  // --- Seção do Título --- 
+  // --- Seção do Título ---
   const todoContentTitle = document.createElement("div");
   todoContentTitle.classList.add("todo-content-title");
 
@@ -177,6 +185,17 @@ export const DOMStuff = (() => {
   todoContentSubmission.appendChild(todoContentPriority);
   todoContent.appendChild(todoContentSubmission);
 
+  // the hidden input
+  const hiddenLabel = document.createElement("label");
+  hiddenLabel.classList.add("todo-project-label", "hidden");
+
+  const hiddenInput = document.createElement("input");
+  hiddenInput.setAttribute("type", "hidden");
+  hiddenInput.setAttribute("name", "todo-project");
+
+  hiddenLabel.appendChild(hiddenInput);
+  todoContent.appendChild(hiddenLabel);
+
   // dropdown part
   const dropdownDivProjects = document.createElement("div");
   dropdownDivProjects.classList.add("dropdown");
@@ -193,13 +212,6 @@ export const DOMStuff = (() => {
   const dropdownProjects = document.createElement("div");
   dropdownProjects.classList.add("dropdown-menu", "hidden");
 
-  const dropdownProjectsItem = document.createElement("div");
-  dropdownProjectsItem.classList.add("option");
-  dropdownProjectsItem.textContent = "test project";
-  dropdownProjectsItem.addEventListener("click", handleOptionSelected);
-  optionsWithListener.add(dropdownProjectsItem);
-  dropdownProjects.appendChild(dropdownProjectsItem);
-
   dropdownDivProjects.appendChild(dropdownTitleProject);
   dropdownDivProjects.appendChild(dropdownProjects);
   todoContent.appendChild(dropdownDivProjects);
@@ -209,6 +221,9 @@ export const DOMStuff = (() => {
   submitButton.setAttribute("type", "submit");
   submitButton.setAttribute("value", "add to do");
   submitButton.textContent = "...to do";
+  submitButton.addEventListener("click", function () {
+    hiddenInput.value = dropdownTitleProject.firstChild.nodeValue;
+  });
 
   todoContent.appendChild(submitButton);
 
@@ -261,6 +276,45 @@ export const DOMStuff = (() => {
   const modalEditOverview = document.querySelector("#edit-forms-window");
   let modalContent;
 
+  // Project stuff, a listener if a project is added
+  // and the if a project was created it is added at the dropdown
+  const container = document.querySelector(".project-list");
+
+  const dropdownOptions = [];
+
+  const observer = new MutationObserver((mutationsList) => {
+    for (const mutation of mutationsList) {
+      if (mutation.type === "childList") {
+        // const options = document.querySelectorAll(".dropdown-menu .option");
+
+        const projects = document.querySelectorAll(".project-item");
+
+        // const optionsTitles = Array.from(options).map(e => e.innerText);
+
+        const projectsTitles = Array.from(projects).map((e) => e.innerText);
+
+        // emptying the array to avoid duplication
+        dropdownOptions.splice(0, dropdownOptions.length);
+
+        projectsTitles.forEach((option) => {
+          const newOption = document.createElement("div");
+          newOption.classList.add("option");
+          newOption.textContent = option;
+          dropdownOptions.push(newOption);
+        });
+
+        dropdownOptions.forEach((option) => {
+          if (!optionsWithListener.has(option)) {
+            option.addEventListener("click", handleOptionSelected);
+            optionsWithListener.add(option);
+          }
+        });
+      }
+    }
+  });
+
+  observer.observe(container, { childList: true });
+
   function showModal({
     id = "create-new-window",
     modalClass = "todo-content",
@@ -273,6 +327,10 @@ export const DOMStuff = (() => {
 
     if (modalClass === "todo-content") {
       modalContent = todoContent;
+      dropdownProjects.innerHTML = "";
+      dropdownOptions.forEach((option) => {
+        dropdownProjects.appendChild(option);
+      });
     } else if (modalClass === "project-content") {
       modalContent = projectContent;
     }
@@ -318,7 +376,12 @@ export const DOMStuff = (() => {
 
     const todoItem = document.createElement("div");
     todoItem.classList.add("todo-item");
-    todoItem.dataset.index = todoIndex;
+
+    if (obj["index"]) {
+      todoItem.dataset.index = obj["index"];
+    } else {
+      todoItem.dataset.index = todoIndex;
+    }
 
     // I shouldn't had create this, but now it's annoying to change
     const todoPriority = document.createElement("div");
@@ -344,6 +407,12 @@ export const DOMStuff = (() => {
 
     todoCheckbox.appendChild(todoInputCheckbox);
 
+    const todoDeleteButton = document.createElement("button");
+    todoDeleteButton.classList.add("todo-delete-button");
+    const todoImageDelete = document.createElement("img");
+    todoImageDelete.src = deleteIcon;
+    todoDeleteButton.appendChild(todoImageDelete);
+
     const todoDescriptionButton = document.createElement("button");
     todoDescriptionButton.classList.add("todo-description-button");
     const todoImageEdit = document.createElement("img");
@@ -365,15 +434,25 @@ export const DOMStuff = (() => {
       loadEditContent(todoDescriptionButton);
     });
 
+    todoDeleteButton.addEventListener("click", function (e) {
+      let todoItem = e.target.closest(".todo-item");
+      deleteTodo(todoItem);
+    });
+
     todoItem.appendChild(todoPriority);
     todoItem.appendChild(todoCheckbox);
+    todoItem.appendChild(todoDeleteButton);
     todoItem.appendChild(todoDescriptionButton);
     todoItem.appendChild(todoTitle);
     todoItem.appendChild(todoDueDate);
 
-    // Putting in the storage
-    dataStuff.storeInfo({ obj: obj, todoIndex: todoIndex });
-    addTodoIndex();
+    // Putting in the storage, I ended up repeting myself here, but
+    // perphaps is more simple this way.
+    if (!obj["index"]) {
+      dataStuff.storeInfo({ obj: obj, todoIndex: todoIndex });
+      addTodoIndex();
+    }
+
     return todoItem;
   }
 
@@ -452,7 +531,6 @@ export const DOMStuff = (() => {
 
   function toggleMenuDisplay(e) {
     const trigger = e.currentTarget;
-    // busca o ancestor mais próximo com a classe .dropdown (mais robusto que parentNode)
     const dropdown = trigger.closest(".dropdown");
     if (!dropdown) return;
 
@@ -493,11 +571,72 @@ export const DOMStuff = (() => {
     hashtag.classList.add("fa-solid", "fa-hashtag");
     newProject.appendChild(hashtag);
     newProject.classList.add("project-item");
+
+    newProject.addEventListener("click", () => {
+      document.querySelector(".main-content").innerHTML = "";
+      const projectName = obj["project-title"];
+      const len = localStorage.length;
+
+      for (let i = 0; i < len; i++) {
+        let key = localStorage.key(i);
+        let value = JSON.parse(localStorage.getItem(key));
+
+        if (typeof value["todo-project"] !== "string") {
+          continue;
+        }
+
+        if (
+          key.startsWith("forms-index-") &&
+          value["todo-project"].trim() == projectName
+        ) {
+          const todoDOM = addToDo(value);
+          addToDoDOM(todoDOM);
+        }
+      }
+    });
+
     newProject.appendChild(document.createTextNode(`${obj["project-title"]}`));
     projectList.appendChild(newProject);
 
     // dataStuff.storeInfo({ obj: obj, projectIndex: projectIndex });
-    addProjectIndex();
+    if (!obj["project-index"]) {
+      addProjectIndex();
+    }
+  }
+
+  function deleteTodo(obj) {
+    dataStuff.deleteTodoInfo(obj);
+    obj.remove();
+  }
+
+  function loadAllToDos(len) {
+    document.querySelector(".main-content").innerHTML = "";
+
+    for (let i = 0; i < len; i++) {
+      let key = localStorage.key(i);
+      let value = localStorage.getItem(key);
+      if (key.startsWith("forms-index-")) {
+        const todoDOM = addToDo(JSON.parse(value));
+        addToDoDOM(todoDOM);
+      }
+    }
+  }
+
+  function loadAllProjects(len) {
+    document.querySelector(".project-list").innerHTML = "";
+
+    for (let i = 0; i < len; i++) {
+      let key = localStorage.key(i);
+      let value = localStorage.getItem(key);
+      if (key.startsWith("project-index-")) {
+        const project = JSON.parse(value);
+        insertProject(project);
+      }
+    }
+  }
+
+  function addToDoDOM(todoDOM) {
+    document.querySelector(".main-content").appendChild(todoDOM);
   }
 
   return {
@@ -508,6 +647,9 @@ export const DOMStuff = (() => {
     editToDo,
     addTransparent,
     handleOptionSelected,
-    insertProject
+    insertProject,
+    loadAllToDos,
+    addToDoDOM,
+    loadAllProjects,
   };
 })();
