@@ -233,6 +233,15 @@ header nav ul {
   background-color: #eee;
   border-right: 1px solid rgb(124, 124, 124);
   padding: 1.5rem;
+  overflow: hidden;
+}
+
+.sidebar:hover {
+  overflow: auto;
+}
+
+.sidebar {
+  scrollbar-width: none; /* Firefox */
 }
 
 .sidebar ul {
@@ -316,10 +325,7 @@ footer p a {
   grid-template: 3rem 1fr / clamp(0px, 20%, 150px) auto;
   background: white;
   padding: 0;
-  /* I wanted to limit the width growth, but naahh, too much work */
-  min-width: 70vw;
-  max-width: 800px;
-  width: auto;
+  width: clamp(20vw, 600px, max(90vw, 55rem));
   min-height: 40vh;
   border-radius: 5px;
 }
@@ -328,12 +334,31 @@ footer p a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 15px;
+  padding: clamp(8px, 3vw, 15px);
   grid-row: 1 / 2;
   grid-column: 1 / 3;
   background-color: rgba(250, 243, 147, 0.705);
   font-size: 1.5rem;
   font-weight: 600;
+
+  min-width: 0 !important; /* Permite que o flex container encolha */
+  width: 100%; /* Garante que use toda largura disponível */
+  overflow: hidden;
+}
+
+.create-new-header > * {
+  min-width: 0;
+}
+
+.create-new-header p {
+  white-space: normal;
+  word-break: break-word;
+  /* ou para ellipsis quando muito pequeno */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex-shrink: 1;
+  min-width: 0; /* CRUCIAL para flex items com texto */
 }
 
 .create-new-header button {
@@ -373,6 +398,56 @@ footer p a {
 
 .create-new-sidebar > ul > *:hover {
   font-weight: 600;
+}
+
+/* The to-do part inside the forms */
+
+.create-new-content {
+  position: relative;
+  overflow: auto;
+  max-height: 381.6px;
+}
+
+.todo-content {
+  width: clamp(200px, 90%, 600px);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  top: 20px;
+  left: 10%;
+  
+}
+
+.todo-content > div {
+  display: flex;
+  gap: 1ch;
+  width: clamp(263px, 80%, 500px);
+}
+
+.todo-content > button {
+  width: clamp(263px, 80%, 500px);
+}
+
+.todo-content > div > input {
+  flex: 1;
+}
+
+.todo-content-priority {
+  display: flex;
+  gap: 1ch;
+
+}
+
+/* The project part inside the forms */
+
+.project-content {
+  width: clamp(200px, 90%, 600px);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  top: 20px;
 }
 
 /* The edit forms */
@@ -428,6 +503,14 @@ footer p a {
 .edit-forms-content {
   grid-row: 2 / 3;
   grid-column: 1 / 3;
+}
+
+.dropdown-title {
+  flex-grow: 1;
+}
+
+.dropdown-menu {
+  flex-grow: 5;
 }
 
 /* I would, theoretically, start the todo-content part, but all this design are annoying the shit out of me, so I will jump for some JavaScript now */
