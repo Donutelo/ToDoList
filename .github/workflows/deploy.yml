@@ -9,6 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false  # ← ADICIONE ESTA LINHA
+          fetch-depth: 0
+          
       - name: Checkout código
         uses: actions/checkout@v3
       
@@ -26,5 +32,6 @@ jobs:
       - name: Deploy no GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+        # github_token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
