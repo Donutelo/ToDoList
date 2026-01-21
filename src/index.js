@@ -28,6 +28,9 @@ document.addEventListener("DOMContentLoaded", function () {
   // Checkbox from the ToDos, to update in the localStorage
   const mainContainer = document.querySelector(".main-content");
 
+  // If the user click in the menu icon in case the screen is less or equals to 700px
+  const menuIcon = document.querySelector(".menu-icon");
+
   mainContainer.addEventListener("change", (event) => {
     if (
       event.target instanceof HTMLInputElement &&
@@ -68,7 +71,6 @@ document.addEventListener("DOMContentLoaded", function () {
     for (let i = 0; i < localStorage.length; i++) {
       let key = localStorage.key(i);
       let value = localStorage.getItem(key);
-      let test = JSON.parse(value);
 
       if (key.startsWith("forms-index-")) {
         let todoDueDate = new Date(JSON.parse(value)["todo-due-date"]);
@@ -143,4 +145,17 @@ document.addEventListener("DOMContentLoaded", function () {
     // In here I should call the editToDoInfo
     dataStuff.editToDoInfo(todoFormsIndex, newToDoInfo);
   });
+
+  menuIcon.addEventListener("click", (e) => {
+    const style = window.getComputedStyle(menuIcon);
+    const transform = style.transform;
+
+    if (transform && transform !== 'none') {
+      const matrix = new DOMMatrixReadOnly(transform);
+
+      if (matrix.m41 < -window.innerWidth + 1) {
+        style.transform
+      }
+    }
+  })
 });
