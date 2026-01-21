@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const mainContainer = document.querySelector(".main-content");
 
   // If the user click in the menu icon in case the screen is less or equals to 700px
-  const menuIcon = document.querySelector(".menu-icon");
+  //const menuIcon = document.querySelector(".menu-icon");
 
   mainContainer.addEventListener("change", (event) => {
     if (
