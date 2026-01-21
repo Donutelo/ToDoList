@@ -12,7 +12,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          persist-credentials: false  # ← ADICIONE ESTA LINHA
+          persist-credentials: false
           fetch-depth: 0
           
       - name: Checkout código
@@ -34,7 +34,6 @@ jobs:
         with:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           publish_dir: ./dist
-          # Configurações extras para evitar erros:
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
-          force_orphan: true  # Limpa branch antiga
+          force_orphan: true
